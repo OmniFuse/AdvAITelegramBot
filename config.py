@@ -59,3 +59,12 @@ OWNER_ID = int(OWNER_ID)
 BOT_NAME = os.environ.get('BOT_NAME') or os.getenv("BOT_NAME") or "Adance AI ChatBot"
 ADMIN_CONTACT_MENTION = os.environ.get('ADMIN_CONTACT_MENTION') or os.getenv("ADMIN_CONTACT_MENTION") or "@techycsr"
 
+# Optional API keys for external AI services
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY') or os.getenv('OPENAI_API_KEY')
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY') or os.getenv('DEEPSEEK_API_KEY')
+GETIMG_API_KEY = os.environ.get('GETIMG_API_KEY') or os.getenv('GETIMG_API_KEY')
+ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY') or os.getenv('ANTHROPIC_API_KEY')
+PIAPI_API_KEY = os.environ.get('PIAPI_API_KEY') or os.getenv('PIAPI_API_KEY')
+ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY') or os.getenv('ELEVENLABS_API_KEY')
+FAL_AI_KEY = os.environ.get('FAL_AI_KEY') or os.getenv('FAL_AI_KEY')
+

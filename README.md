@@ -273,6 +273,14 @@ export BOT_TOKEN="your_telegram_bot_token"
 export API_KEY="your_telegram_api_key"
 export API_HASH="your_telegram_api_hash"
 export DATABASE_URL="mongodb://localhost:27017/"
+# Optional API keys
+export OPENAI_API_KEY="your_openai_key"
+export DEEPSEEK_API_KEY="your_deepseek_key"
+export GETIMG_API_KEY="your_getimg_key"
+export ANTHROPIC_API_KEY="your_anthropic_key"
+export PIAPI_API_KEY="your_piapi_key"
+export ELEVENLABS_API_KEY="your_elevenlabs_key"
+export FAL_AI_KEY="your_fal_ai_key"
 ```
 </details>
 

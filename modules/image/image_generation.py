@@ -19,6 +19,8 @@ from modules.user.premium_management import is_user_premium
 from modules.user.ai_model import get_user_ai_models, DEFAULT_IMAGE_MODEL, IMAGE_MODELS, RESTRICTED_IMAGE_MODELS
 from g4f.client import AsyncClient
 from g4f.Provider import PollinationsImage
+import openai
+from config import OPENAI_API_KEY
 from modules.core.database import db_service
 from pyrogram.enums import ParseMode
 
@@ -200,16 +202,28 @@ async def generate_images(prompt: str, style: str, max_images: int = 1, user_id:
 
     image_urls_list = []
     try:
-        client = AsyncClient(image_provider=PollinationsImage)
-        response = await client.images.generate(
-            prompt=enhanced_prompt,
-            model=user_image_model,
-            n=max_images,
-            response_format="url",
-            width=1024,
-            height=1024,
-            quality="standard"
-        )
+        if OPENAI_API_KEY and user_image_model.startswith("dall-e"):
+            loop = asyncio.get_event_loop()
+            def run_openai():
+                client = openai.OpenAI(api_key=OPENAI_API_KEY)
+                return client.images.generate(
+                    prompt=enhanced_prompt,
+                    model=user_image_model,
+                    n=max_images,
+                    size="1024x1024"
+                )
+            response = await loop.run_in_executor(None, run_openai)
+        else:
+            client = AsyncClient(image_provider=PollinationsImage)
+            response = await client.images.generate(
+                prompt=enhanced_prompt,
+                model=user_image_model,
+                n=max_images,
+                response_format="url",
+                width=1024,
+                height=1024,
+                quality="standard"
+            )
         if not response or not response.data:
             logger.warning(f"g4f returned no image data (empty/None response.data).")
             return None, "Failed to generate images. No images were returned by the provider. Please try a different prompt or try again later."
