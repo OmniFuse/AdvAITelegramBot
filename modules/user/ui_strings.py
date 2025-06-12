@@ -4,91 +4,91 @@ Module containing all UI strings used in the bot for easy translation.
 
 # Start and Help commands
 START_MESSAGE = """
-👋 Welcome to AdvChatGptBot!
+👋 Добро пожаловать в AdvChatGptBot!
 
-I'm your advanced AI assistant powered by cutting-edge technology.
+Я ваш продвинутый AI‑ассистент на базе современных технологий.
 
-🔸 Chat directly with me
-🔸 Send voice messages
-🔸 Generate images with /img
-🔸 Adjust settings with /settings
-🔸 Clear chat history with /new
+🔸 Общайтесь со мной напрямую
+🔸 Отправляйте голосовые сообщения
+🔸 Генерируйте изображения командой /img
+🔸 Изменяйте настройки через /settings
+🔸 Очищайте историю чата командой /new
 
-💡 For more information, use /help
+💡 Для дополнительной информации используйте /help
 """
 
 HELP_MESSAGE = """
-**AdvChatGptBot Help**
+**Справка AdvChatGptBot**
 
-**Commands:**
-• /start - Start the bot
-• /help - Show this help menu
-• /settings - Configure bot settings
-• /new or /newchat - Start a new conversation
-• /img [prompt] - Generate an image
-• /rate - Rate the bot
+**Команды:**
+• /start — запустить бота
+• /help — показать это меню
+• /settings — настройки бота
+• /new или /newchat — начать новый диалог
+• /img [prompt] — создать изображение
+• /rate — оценить бота
 
-**Features:**
-• Send text messages for AI responses
-• Record voice messages for voice interaction
-• Send images to extract text and get AI analysis
-• In groups, use /ai to interact with the bot
+**Возможности:**
+• Отправляйте текстовые сообщения для ответа ИИ
+• Записывайте голосовые сообщения
+• Отправляйте изображения для распознавания текста
+• В группах используйте /ai для общения с ботом
 
-Need more help? Use the settings menu to adjust language, voice preferences, and more.
+Нужна дополнительная помощь? Откройте меню настроек и выберите язык, голос и другие параметры.
 """
 
 # Settings UI
-SETTINGS_MAIN = "⚙️ **Bot Settings**\n\nCustomize your experience with AdvChatGptBot"
-SETTINGS_VOICE = "🎙️ **Voice Settings**\n\nCurrent mode: {}\n\nChoose how you want to receive responses to voice messages"
-SETTINGS_LANGUAGE = "🌐 **Language Settings**\n\nCurrent language: {}\n\nSelect your preferred interface language"
-SETTINGS_ASSISTANT = "🤖 **Assistant Mode**\n\nCurrent mode: {}\n\nChoose the personality of your AI assistant"
-SETTINGS_SUPPORT = "📞 **Support**\n\nGet help with using the bot"
+SETTINGS_MAIN = "⚙️ **Настройки бота**\n\nНастройте работу AdvChatGptBot под себя"
+SETTINGS_VOICE = "🎙️ **Настройки голоса**\n\nТекущий режим: {}\n\nВыберите, как получать ответы на голосовые сообщения"
+SETTINGS_LANGUAGE = "🌐 **Настройки языка**\n\nТекущий язык: {}\n\nВыберите предпочитаемый язык интерфейса"
+SETTINGS_ASSISTANT = "🤖 **Режим ассистента**\n\nТекущий режим: {}\n\nВыберите стиль работы AI‑ассистента"
+SETTINGS_SUPPORT = "📞 **Поддержка**\n\nПолучите помощь по использованию бота"
 
 # Buttons
-BTN_BACK = "🔙 Back"
-BTN_SETTINGS = "⚙️ Settings"
-BTN_HELP = "❓ Help"
-BTN_COMMANDS = "📋 Commands"
+BTN_BACK = "🔙 Назад"
+BTN_SETTINGS = "⚙️ Настройки"
+BTN_HELP = "❓ Помощь"
+BTN_COMMANDS = "📋 Команды"
 
 # Voice settings
-VOICE_SETTING_UPDATED = "Voice setting updated to: {}"
-TEXT_MODE = "Text mode"
-VOICE_MODE = "Voice mode"
+VOICE_SETTING_UPDATED = "Режим голосовых сообщений изменён на: {}"
+TEXT_MODE = "Текстовый режим"
+VOICE_MODE = "Голосовой режим"
 
 # Language settings
-LANGUAGE_UPDATED = "Language updated to: {}"
+LANGUAGE_UPDATED = "Язык изменён на: {}"
 
 # Assistant modes
-MODE_UPDATED = "Assistant mode updated to: {}"
-MODE_CHATBOT = "Chatbot"
-MODE_CODER = "Coder"
-MODE_PROFESSIONAL = "Professional"
-MODE_TEACHER = "Teacher"
-MODE_THERAPIST = "Therapist"
-MODE_ASSISTANT = "Assistant"
-MODE_GAMER = "Gamer"
-MODE_TRANSLATOR = "Translator"
+MODE_UPDATED = "Режим ассистента изменён на: {}"
+MODE_CHATBOT = "Чат-бот"
+MODE_CODER = "Программист"
+MODE_PROFESSIONAL = "Профессионал"
+MODE_TEACHER = "Учитель"
+MODE_THERAPIST = "Терапевт"
+MODE_ASSISTANT = "Ассистент"
+MODE_GAMER = "Геймер"
+MODE_TRANSLATOR = "Переводчик"
 
 # Image generation
-GENERATING_IMAGES = "🖼️ Generating images. Please wait..."
-IMAGES_GENERATED = "Images generated for prompt: {}"
+GENERATING_IMAGES = "🖼️ Генерирую изображения. Пожалуйста, подождите..."
+IMAGES_GENERATED = "Сгенерированные изображения по запросу: {}"
 
 # Voice messages
-PROCESSING_VOICE = "🎙️ Processing your voice message..."
-VOICE_NOT_UNDERSTOOD = "Sorry, I couldn't understand the audio."
-VOICE_SERVICE_ERROR = "There was an issue with the speech recognition service. Please try again later."
+PROCESSING_VOICE = "🎙️ Обрабатываю ваше голосовое сообщение..."
+VOICE_NOT_UNDERSTOOD = "Извините, не удалось распознать аудио."
+VOICE_SERVICE_ERROR = "Возникла проблема с сервисом распознавания речи. Попробуйте позже."
 
 # OCR
-EXTRACTING_TEXT = "🔍 Extracting text from image..."
-OCR_ERROR = "Error: Failed to extract text from image. {}"
+EXTRACTING_TEXT = "🔍 Извлекаю текст с изображения..."
+OCR_ERROR = "Ошибка: не удалось извлечь текст из изображения. {}"
 
 # New chat
-CHAT_CLEARED = "Your chat history has been cleared. You can start a new conversation now."
+CHAT_CLEARED = "История чата очищена. Можете начать новый диалог."
 
 # Rate bot
-RATE_MESSAGE = "⭐ Please rate your experience with AdvChatGptBot"
-RATE_THANK_YOU = "Thank you for your feedback! Your rating: {}/5"
+RATE_MESSAGE = "⭐ Оцените работу AdvChatGptBot"
+RATE_THANK_YOU = "Спасибо за отзыв! Ваша оценка: {}/5"
 
 # Error messages
-ERROR_OCCURRED = "An error occurred: {}"
-COMMAND_NOT_ALLOWED = "You are not allowed to use this command."
+ERROR_OCCURRED = "Произошла ошибка: {}"
+COMMAND_NOT_ALLOWED = "Вам нельзя использовать эту команду."

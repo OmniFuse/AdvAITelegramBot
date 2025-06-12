@@ -25,12 +25,12 @@ CACHE_VALIDITY = 180  # 3 minutes
 
 # Additional user categories
 USER_CATEGORIES = {
-    "all": "All Users",
-    "recent": "Recently Active",
-    "active": "Most Active Users",
-    "new": "New Users",
-    "inactive": "Inactive Users",
-    "groups": "Groups"
+    "all": "Все пользователи",
+    "recent": "Недавно активные",
+    "active": "Самые активные",
+    "new": "Новые пользователи",
+    "inactive": "Неактивные",
+    "groups": "Группы"
 }
 
 async def get_users_list(limit: int = 10, offset: int = 0, filter_type: str = "recent") -> List[Dict[str, Any]]:
@@ -258,11 +258,11 @@ async def handle_user_management(client: Client, callback: CallbackQuery, page: 
         group_count = await get_user_count("groups")
         
         # Translate UI elements
-        title = await async_translate_to_lang("👥 User Management", user_id)
-        back_text = await async_translate_to_lang("🔙 Back", user_id)
-        next_text = await async_translate_to_lang("Next ➡️", user_id)
-        prev_text = await async_translate_to_lang("⬅️ Previous", user_id)
-        refresh_text = await async_translate_to_lang("🔄 Refresh", user_id)
+        title = await async_translate_to_lang("👥 Управление пользователями", user_id)
+        back_text = await async_translate_to_lang("🔙 Назад", user_id)
+        next_text = await async_translate_to_lang("Далее ➡️", user_id)
+        prev_text = await async_translate_to_lang("⬅️ Назад", user_id)
+        refresh_text = await async_translate_to_lang("🔄 Обновить", user_id)
         
         # Create message text
         message = f"**{title}**\n\n"
@@ -300,35 +300,35 @@ async def handle_user_management(client: Client, callback: CallbackQuery, page: 
                     # Show relative time if recent
                     days_ago = user.get('days_since_activity', 0)
                     if days_ago == 0:
-                        meta_line.append("Today")
+                        meta_line.append("Сегодня")
                     elif days_ago == 1:
-                        meta_line.append("Yesterday")
+                        meta_line.append("Вчера")
                     else:
-                        meta_line.append(f"{days_ago}d ago")
+                        meta_line.append(f"{days_ago}д назад")
                 else:
-                    meta_line.append("Unknown")
+                    meta_line.append("Неизвестно")
                 
                 # Activity count if available
                 if 'activity_count' in user and user['activity_count']:
-                    meta_line.append(f"{user['activity_count']} msgs")
+                    meta_line.append(f"{user['activity_count']} сообщений")
                 elif 'message_count' in user and user['message_count']:
-                    meta_line.append(f"{user['message_count']} msgs")
+                    meta_line.append(f"{user['message_count']} сообщений")
                 
                 # Group members if it's a group
                 if user.get('is_group') and 'member_count' in user:
-                    meta_line.append(f"{user['member_count']} members")
+                    meta_line.append(f"{user['member_count']} участников")
                 
                 # Join date for new users
                 if filter_type == "new" and 'created_at' in user:
                     join_date = user['created_at']
                     if isinstance(join_date, datetime.datetime):
-                        meta_line.append(f"Joined: {join_date.strftime('%Y-%m-%d')}")
+                        meta_line.append(f"Присоединился: {join_date.strftime('%Y-%m-%d')}")
                 
                 # Add user entry to message
                 message += f"{i+offset}. {type_indicator} **{user_name}** (@{username})\n"
                 message += f"   ID: `{user_id_str}` • {' • '.join(meta_line)}\n"
         else:
-            no_users_text = await async_translate_to_lang("No users found", user_id)
+            no_users_text = await async_translate_to_lang("Пользователи не найдены", user_id)
             message += f"*{no_users_text}*\n"
         
         # Create keyboard - ensure proper structure
@@ -337,30 +337,30 @@ async def handle_user_management(client: Client, callback: CallbackQuery, page: 
         # Category filter buttons (2 rows)
         cat_row1 = []
         cat_row1.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'all' else ''} All",
+            f"{'✅' if filter_type == 'all' else ''} Все",
             callback_data="admin_users_filter_all_0"
         ))
         cat_row1.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'recent' else ''} Recent",
+            f"{'✅' if filter_type == 'recent' else ''} Недавние",
             callback_data="admin_users_filter_recent_0"
         ))
         cat_row1.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'active' else ''} Active",
+            f"{'✅' if filter_type == 'active' else ''} Активные",
             callback_data="admin_users_filter_active_0"
         ))
         keyboard.append(cat_row1)
         
         cat_row2 = []
         cat_row2.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'new' else ''} New",
+            f"{'✅' if filter_type == 'new' else ''} Новые",
             callback_data="admin_users_filter_new_0"
         ))
         cat_row2.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'groups' else ''} Groups",
+            f"{'✅' if filter_type == 'groups' else ''} Группы",
             callback_data="admin_users_filter_groups_0"
         ))
         cat_row2.append(InlineKeyboardButton(
-            f"{'✅' if filter_type == 'inactive' else ''} Inactive",
+            f"{'✅' if filter_type == 'inactive' else ''} Неактивные",
             callback_data="admin_users_filter_inactive_0"
         ))
         keyboard.append(cat_row2)
@@ -400,6 +400,6 @@ async def handle_user_management(client: Client, callback: CallbackQuery, page: 
             await show_admin_panel(client, callback)
         except:
             # Last resort fallback
-            await callback.answer("Failed to load user management. Try again later.", show_alert=True)
+            await callback.answer("Не удалось загрузить управление пользователями. Попробуйте позже.", show_alert=True)
 
 # Update __init__.py to export this function 

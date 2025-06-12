@@ -33,34 +33,36 @@ async def new_chat_members(client, message):
             )
             
             # Welcome message
-            message_text = f"🎉 **ᴛʜᴀɴᴋ ʏᴏᴜ {nam} ꜰᴏʀ ᴀᴅᴅɪɴɢ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ!** 🎉\n"
+            message_text = (
+                f"🎉 **Спасибо, {nam}, что добавили меня в группу!** 🎉\n"
+            )
             message_text += """
-🤖 ɪ'ᴍ ʜᴇʀᴇ ᴛᴏ ᴀꜱꜱɪꜱᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴡɪᴛʜ:
+🤖 Я здесь, чтобы помочь вашему сообществу:
 
-• 💬 ꜱᴍᴀʀᴛ ᴄᴏɴᴠᴇʀꜱᴀᴛɪᴏɴꜱ
-• 🖼️ ɪᴍᴀɢᴇ ɢᴇɴᴇʀᴀᴛɪᴏɴ
-• 🎙️ ᴠᴏɪᴄᴇ ʀᴇᴄᴏɢɴɪᴛɪᴏɴ
-• 📝 ᴛᴇxᴛ ᴀɴᴀʟʏꜱɪꜱ
+• 💬 Умные беседы
+• 🖼️ Генерация изображений
+• 🎙️ Распознавание голоса
+• 📝 Анализ текста
 """
-            
+
             # Add admin rights request
             message_text += """
-ᴛᴏ ᴡᴏʀᴋ ᴄᴏʀʀᴇᴄᴛʟʏ, ɪ ɴᴇᴇᴅ ᴛʜᴇꜱᴇ ᴘᴇʀᴍɪꜱꜱɪᴏɴꜱ:
+Чтобы работать корректно, мне нужны следующие разрешения:
 
-✅ ᴅᴇʟᴇᴛᴇ ᴍᴇꜱꜱᴀɢᴇꜱ - ᴛᴏ ᴋᴇᴇᴘ ᴛʜᴇ ᴄʜᴀᴛ ᴄʟᴇᴀɴ
-✅ ɪɴᴠɪᴛᴇ ᴜꜱᴇʀꜱ - ꜰᴏʀ ɢʀᴏᴜᴘ ɪɴᴠɪᴛᴇ ʟɪɴᴋꜱ
+✅ Удаление сообщений — для чистоты чата
+✅ Приглашение пользователей — для ссылок приглашения
 
-ʟᴇᴛ'ꜱ ᴍᴀᴋᴇ ᴛʜɪꜱ ɢʀᴏᴜᴘ ᴀᴡᴇꜱᴏᴍᴇ ᴛᴏɢᴇᴛʜᴇʀ! 🚀
+Давайте сделаем эту группу замечательной вместе! 🚀
 """
             
             reply_markup = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("🤖 ꜱᴛᴀʀᴛ ᴜꜱɪɴɢ ʙᴏᴛ", callback_data="group_start"),
-                        InlineKeyboardButton("📚 ᴄᴏᴍᴍᴀɴᴅꜱ", callback_data="group_commands")
+                        InlineKeyboardButton("🤖 Начать работу", callback_data="group_start"),
+                        InlineKeyboardButton("📚 Команды", callback_data="group_commands")
                     ],
                     [
-                        InlineKeyboardButton("🔗 ꜱᴜᴘᴘᴏʀᴛ", url="https://t.me/AdvAIworld")
+                        InlineKeyboardButton("🔗 Поддержка", url="https://t.me/AdvAIworld")
                     ]
                 ]
             )

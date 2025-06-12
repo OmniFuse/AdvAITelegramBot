@@ -19,38 +19,38 @@ button_list = [
     "❓ Help",
     "⚙️ Settings",
     "📞 Support",
-    "💎 Get Premium Subscription"
+    "💎 Получить премиум"
 ]
 
 welcome_text = """
-✨ **Welcome {user_mention}!** ✨
+✨ **Добро пожаловать, {user_mention}!** ✨
 
-🤖 **Advanced AI Bot**
+🤖 **Продвинутый AI Бот**
 
-I can help you with:
+Я могу помочь вам с:
 
-🧠 **Smart Chat** - Intelligent conversations with Multi-Model
-🗣️ **Voice & Text** - Convert voice to text and back
-🖼️ **Image Creation** - Generate stunning visuals from text
-📝 **Text Extraction** - Analyze text from any image
-🌐 **Multilingual** - Communicate in your language
+🧠 **Умный чат** — интеллектуальные беседы с мультимодельным ИИ
+🗣️ **Голос и текст** — преобразование голоса в текст и обратно
+🖼️ **Создание изображений** — генерация потрясающих картинок из текста
+📝 **Извлечение текста** — анализ текста на изображениях
+🌐 **Мультиязычность** — общение на вашем языке
 
 ━━━━━━━━━━━━━━━━━━━━━
 
-<b>🧠 AI Text Models Supported:</b>
+<b>🧠 Поддерживаемые текстовые модели ИИ:</b>
 """ + ", ".join(TEXT_MODELS.values()) + """
 
-<b>🖼️ Image Generation Models Supported:</b>
+<b>🖼️ Поддерживаемые модели генерации изображений:</b>
 """ + ", ".join(IMAGE_MODELS.values()) + """
 
-<b>✨ Multi-Model Support:</b> You can choose your preferred AI and image models in Settings → AI Model Panel.
+<b>✨ Поддержка нескольких моделей:</b> Вы можете выбрать предпочитаемые текстовые и графические модели в Настройках → Панель моделей ИИ.
 
-👨‍💻 **Developed by [Chandan Singh](https://techycsr.me)**(**@techycsr**)
+👨‍💻 **Разработчик — [Chandan Singh](https://techycsr.me)**(**@techycsr**)
 
-**Select a button below to get started!**
+**Выберите кнопку ниже, чтобы начать!**
 """
 
-tip_text = "💡 **Pro Tip:** Type any message to start chatting with me **OR**\nuse `/img` with your prompt to generate images!\n**For more commands use /help.**"
+tip_text = "💡 **Совет:** Напишите любое сообщение, чтобы начать общение со мной, **или**\nиспользуйте `/img` с вашим запросом для генерации изображений!\n**Больше команд: /help.**"
 
 LOGO = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnp4MnR0YXk3ZGNjenR6NGRoaDNkc2h2NDgxa285NnExaGM1MTZmYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S60CrN9iMxFlyp7uM8/giphy.gif"
 UPI_QR_CODE_PATH = "assets/upi_qr.png" # Placeholder - replace with actual path or URL
@@ -108,7 +108,7 @@ async def premium_info_page(client_or_bot, update_obj: Union[Message, CallbackQu
     """Sends or edits message to show premium benefits. Can be called by command or callback."""
     user_id = update_obj.from_user.id
     benefits_text = await get_premium_benefits_message(user_id)
-    btn_get_sub_text = await async_translate_to_lang("💳 Get Subscription", user_id)
+    btn_get_sub_text = await async_translate_to_lang("💳 Получить подписку", user_id)
     btn_back_text = await async_translate_to_lang("🔙 Back to Start", user_id)
 
     keyboard_buttons = [
