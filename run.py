@@ -5,7 +5,15 @@ import time
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from pyrogram.enums import ChatAction, ChatType, ParseMode
-from modules.user.start import start, start_inline, premium_info_page, premium_plans_callback, premium_paid_notify_callback
+from modules.user.start import (
+    start,
+    start_inline,
+    premium_info_page,
+    premium_plans_callback,
+    premium_paid_notify_callback,
+    yookassa_pay_callback,
+    check_payment_status_callback,
+)
 from modules.user.help import help
 from modules.user.commands import command_inline
 from modules.user.settings import settings_inline, settings_language_callback, change_voice_setting, settings_voice_inlines, settings_image_count_callback, change_image_count_callback
@@ -623,6 +631,12 @@ def create_bot_instance(bot_token, bot_index=1):
                 return
             elif callback_query.data == "premium_paid_notify":
                 await premium_paid_notify_callback(client, callback_query)
+                return
+            elif callback_query.data.startswith("yookassa_pay_"):
+                await yookassa_pay_callback(client, callback_query)
+                return
+            elif callback_query.data.startswith("check_payment_"):
+                await check_payment_status_callback(client, callback_query)
                 return
             # Image generation count settings
             elif callback_query.data == "settings_image_count":
