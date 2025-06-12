@@ -198,7 +198,7 @@ async def help_inline_start(bot, callback):
         "🖼️ Генерации", 
         "🎙️ Голосовые функции",
         "🔍 Анализ изображений",
-        "🚀 Быстрый старт","🔙 Назад"
+        "🚀 Быстрый старт", "📋 Команды","🔙 Назад"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
@@ -235,7 +235,7 @@ async def help_inline_help(bot, callback):
         "🖼️ Генерации", 
         "🎙️ Голосовые функции",
         "🔍 Анализ изображений",
-        "🚀 Быстрый старт","🔙 Назад"
+        "🚀 Быстрый старт", "📋 Команды"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
