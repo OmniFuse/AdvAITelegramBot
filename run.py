@@ -3,7 +3,7 @@ import config
 import pyrogram
 import time
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.enums import ChatAction, ChatType, ParseMode
 from modules.user.start import (
     start,

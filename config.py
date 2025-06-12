@@ -71,7 +71,6 @@ FAL_AI_KEY = os.environ.get('FAL_AI_KEY') or os.getenv('FAL_AI_KEY')
 # YooKassa payment credentials
 YOOKASSA_SHOP_ID = os.environ.get('YOOKASSA_SHOP_ID') or os.getenv('YOOKASSA_SHOP_ID') or ''
 YOOKASSA_API_KEY = os.environ.get('YOOKASSA_API_KEY') or os.getenv('YOOKASSA_API_KEY') or ''
-YOOKASSA_PROVIDER_TOKEN = os.environ.get('YOOKASSA_PROVIDER_TOKEN') or os.getenv('YOOKASSA_PROVIDER_TOKEN') or ''
 
 # Toggle automatic translation of bot messages
 TRANSLATION_ENABLED = (
