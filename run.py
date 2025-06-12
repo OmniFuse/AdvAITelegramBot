@@ -1218,7 +1218,7 @@ def create_bot_instance(bot_token, bot_index=1):
         
         # Add a button to contact admin or view donation options
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("💰 Донат или обновление до премиума", url="https://t.me/techycsr")]
+            [InlineKeyboardButton("💰 Донат или обновление до премиума", url="https://t.me/artemevkhv")]
           
         ])
         
