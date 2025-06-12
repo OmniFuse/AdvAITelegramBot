@@ -7,6 +7,8 @@ from typing import List, Dict, Any, Optional, Generator, Union
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from g4f.client import Client as GPTClient
+import openai
+from config import OPENAI_API_KEY, DEEPSEEK_API_KEY
 from modules.core.database import get_history_collection
 from modules.chatlogs import user_log
 from modules.maintenance import maintenance_check, maintenance_message, is_feature_enabled
@@ -30,6 +32,8 @@ DEEPINFRA_MODEL_MAP = {
 
 # Initialize the GPT client with a more efficient provider
 gpt_client = GPTClient(provider="PollinationsAI")
+openai_client = openai.OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+deepseek_client = openai.OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com/v1") if DEEPSEEK_API_KEY else None
 
 def get_response(history: List[Dict[str, str]], model: str = "gpt-4o", provider: str = "PollinationsAI") -> str:
     """
@@ -52,6 +56,18 @@ def get_response(history: List[Dict[str, str]], model: str = "gpt-4o", provider:
             if not isinstance(msg, dict):
                 history[i] = {"role": "user", "content": str(msg)}
         gpt_client = GPTClient()
+        if model in ["gpt-4o", "gpt-4.1"] and openai_client:
+            response = openai_client.chat.completions.create(
+                model=model,
+                messages=history,
+            )
+            return response.choices[0].message.content
+        if model == "deepseek-r1" and deepseek_client:
+            response = deepseek_client.chat.completions.create(
+                model="deepseek-chat",
+                messages=history,
+            )
+            return response.choices[0].message.content
         if provider == "PollinationsAI":
             response = gpt_client.chat.completions.create(
                 model=model,
@@ -103,9 +119,16 @@ def get_streaming_response(history: List[Dict[str, str]]) -> Optional[Generator]
             if not isinstance(msg, dict):
                 history[i] = {"role": "user", "content": str(msg)}
                 
-        # Stream parameter set to True to get response chunks
+        if openai_client:
+            response = openai_client.chat.completions.create(
+                model="gpt-4o",
+                messages=history,
+                stream=True
+            )
+            return response
+        # Stream parameter set to True to get response chunks via g4f
         response = gpt_client.chat.completions.create(
-            model="gpt-4o",  # Using more capable model for higher quality responses
+            model="gpt-4o",
             messages=history,
             stream=True
         )
