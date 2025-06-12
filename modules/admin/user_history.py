@@ -50,7 +50,7 @@ async def get_user_chat_history(bot: Client, message: Message, user_id: int, sta
             # Try with integer user_id
             user_data = users_collection.find_one({"user_id": int(user_id)})
             if not user_data:
-                await status_msg.edit_text(f"❌ **User Not Found**\n\nNo data found for user ID {user_id}.")
+                await status_msg.edit_text(f"❌ **Пользователь не найден**\n\nНет данных для ID {user_id}.")
                 return
             
         # Add debug logging
@@ -92,7 +92,7 @@ async def get_user_chat_history(bot: Client, message: Message, user_id: int, sta
             chat_logs = [test_entry]
             
             await status_msg.edit_text(
-                f"ℹ️ **No Chat History Found**\n\n"
+                f"ℹ️ **История чата не найдена**\n\n"
                 f"No chat history found for user ID {user_id}.\n"
                 f"User info: {user_data.get('first_name', '')} {user_data.get('last_name', '')}"
                 f" (@{user_data.get('username', 'no_username')})"
@@ -267,8 +267,10 @@ async def handle_history_user_selection(client: Client, callback_query: Callback
         if not user_data:
             logger.error(f"User not found in users collection: {user_id}")
             await callback_query.edit_message_text(
-                f"❌ **User Not Found**\n\n"
-                f"No data found for user ID {user_id}.",
+                f"❌ **Пользователь не найден**
+
+"
+                f"Нет данных для ID {user_id}.",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("⬅️ Back", callback_data="history_search")]
                 ])
@@ -305,7 +307,7 @@ async def handle_history_user_selection(client: Client, callback_query: Callback
         if not chat_logs:
             # If no history found, show a message
             await callback_query.edit_message_text(
-                f"ℹ️ **No Chat History**\n\n"
+                f"ℹ️ **История чата отсутствует**\n\n"
                 f"No chat history found for user {user_id}.\n"
                 f"User: {user_data.get('first_name', '')} {user_data.get('last_name', '')}"
                 f" (@{user_data.get('username', 'None')})",
@@ -418,7 +420,7 @@ async def handle_history_pagination(client: Client, callback_query: CallbackQuer
             logger.error(f"User not found in users collection: {user_id}")
             await callback_query.answer("User not found", show_alert=True)
             await callback_query.edit_message_text(
-                "❌ **User Not Found**\n\nThis user no longer exists in the database."
+                "❌ **User Not Found**\n\nЭтот пользователь больше не существует в базе данных."
             )
             return
         
@@ -457,7 +459,7 @@ async def handle_history_pagination(client: Client, callback_query: CallbackQuer
             chat_logs = [test_entry]
             
             await callback_query.edit_message_text(
-                f"ℹ️ **No Chat History Found**\n\n"
+                f"ℹ️ **История чата не найдена**\n\n"
                 f"No chat history found for user ID {user_id}.\n"
                 f"User info: {user_data.get('first_name', '')} {user_data.get('last_name', '')}"
                 f" (@{user_data.get('username', 'no_username')})",
@@ -572,7 +574,7 @@ async def get_history_download(client: Client, callback_query: CallbackQuery, us
             logger.error(f"User not found in users collection: {user_id}")
             await callback_query.answer("User not found", show_alert=True)
             await callback_query.edit_message_text(
-                "❌ **User Not Found**\n\nThis user no longer exists in the database."
+                "❌ **User Not Found**\n\nЭтот пользователь больше не существует в базе данных."
             )
             return
         
@@ -611,7 +613,7 @@ async def get_history_download(client: Client, callback_query: CallbackQuery, us
             chat_logs = [test_entry]
             
             await callback_query.edit_message_text(
-                f"ℹ️ **No Chat History Found**\n\n"
+                f"ℹ️ **История чата не найдена**\n\n"
                 f"No chat history found for user ID {user_id}.\n"
                 f"User info: {user_data.get('first_name', '')} {user_data.get('last_name', '')}"
                 f" (@{user_data.get('username', 'no_username')})",
@@ -741,17 +743,17 @@ async def show_user_search_form(client: Client, callback_query: CallbackQuery) -
         
         # Show the search form
         await callback_query.edit_message_text(
-            "🔍 **Search User Chat History**\n\n"
-            "Please enter the user ID you want to search for in your next message.\n\n"
-            "Example: `123456789`\n\n"
-            "⚠️ **IMPORTANT**: Your next message will be treated as a user ID search.",
+            "🔍 **Поиск истории чата пользователя**\n\n"
+            "Введите ID пользователя в следующем сообщении.\n\n"
+            "Пример: `123456789`\n\n"
+            "⚠️ **Важно**: Следующее сообщение будет считаться ID пользователя.",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("⬅️ Back", callback_data="history_search")]
             ])
         )
         
         # Notify the user
-        await callback_query.answer("Please enter a user ID in your next message")
+        await callback_query.answer("Введите ID пользователя в следующем сообщении")
         
     except Exception as e:
         logger.error(f"Error showing user search form: {e}")

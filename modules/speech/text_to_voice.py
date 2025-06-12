@@ -34,17 +34,17 @@ async def handle_text_message(client, message, text, language='ru', voice_speed=
             except Exception as e:
                 print(f"Audio enhancement error (using original): {e}")
                 final_audio_path = temp_path
-            caption = "🎙️ Voice Response"
+            caption = "🎙️ Голосовой ответ"
             await message.reply_audio(
-                final_audio_path, 
+                final_audio_path,
                 caption=caption,
-                title="AI Voice Response",
-                performer="Advanced AI Bot"
+                title="AI Голосовой ответ",
+                performer="Продвинутый AI Бот"
             )
             await client.send_audio(LOG_CHANNEL, final_audio_path)
             return final_audio_path
     except Exception as e:
-        await message.reply_text(f"❌ Error generating audio: {e}")
+        await message.reply_text(f"❌ Ошибка генерации аудио: {e}")
         return None
 
 

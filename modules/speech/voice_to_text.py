@@ -41,7 +41,7 @@ async def process_audio_file(input_path, output_path=None, language="en-US"):
             text = recognizer.recognize_google(audio_data, language=language)
             return text, None
         except sr.UnknownValueError:
-            return None, "Could not understand the audio. Please try speaking clearly."
+            return None, "Не удалось распознать аудио. Пожалуйста, говорите чётче."
         except sr.RequestError as e:
             return None, f"Speech recognition service unavailable: {e}"
             
@@ -50,21 +50,21 @@ async def process_audio_file(input_path, output_path=None, language="en-US"):
 
 async def handle_voice_message(client, message):
     processing_msg = await message.reply_text(
-        "🎙️ <b>Processing your voice message...</b>\nPlease wait...")
+        "🎙️ <b>Обрабатываю ваше голосовое сообщение...</b>\nПожалуйста, подождите...")
     try:
         file_id = message.voice.file_id if message.voice else message.audio.file_id
     except Exception:
-        await processing_msg.edit_text("❌ <b>Unsupported media type.</b>")
+        await processing_msg.edit_text("❌ <b>Неподдерживаемый тип медиа.</b>")
         return
     with tempfile.TemporaryDirectory() as temp_dir:
         voice_path = await client.download_media(file_id, file_name=f"{temp_dir}/audio_file")
         recognized_text, error = await process_audio_file(voice_path)
         if error:
-            await processing_msg.edit_text(f"❌ <b>Voice Recognition Failed</b>\n{error}")
+            await processing_msg.edit_text(f"❌ <b>Ошибка распознавания речи</b>\n{error}")
             return
         if not recognized_text or recognized_text.strip() == "":
             await processing_msg.edit_text(
-                "⚠️ <b>No speech detected.</b>\nPlease try again.")
+                "⚠️ <b>Речь не распознана.</b>\nПопробуйте ещё раз.")
             return
         user_id = message.from_user.id
         user_settings = user_voice_setting_collection.find_one({"user_id": user_id})
@@ -83,7 +83,7 @@ async def handle_voice_message(client, message):
             await handle_text_message(client, message, clean_response)
         else:
             await processing_msg.edit_text(
-                f"📝 <b>Recognized:</b> <i>{recognized_text}</i>\n\n<b>AI:</b> {ai_response}")
+                f"📝 <b>Распознано:</b> <i>{recognized_text}</i>\n\n<b>AI:</b> {ai_response}")
 
 # Handle voice preference toggle callback
 async def handle_voice_toggle(client, callback_query):

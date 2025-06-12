@@ -17,13 +17,17 @@ async def rate_command(client: Client, message):
 
     # Check if the user has already voted by querying the database
     if user_ratings_collection.find_one({"user_id": user_id}):
-        await message.reply("You have already rated.")
+        await message.reply("Вы уже оставили оценку.")
         return
 
     user = message.from_user
     mention = user.mention(user.first_name)
     
-    rate_message = "**ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ꜰᴇᴇᴅʙᴀᴄᴋ ꜰᴏʀᴍ\nᴘʟᴇᴀꜱᴇ ʀᴀᴛᴇ ʏᴏᴜʀ ᴇxᴘᴇʀɪᴇɴᴄᴇ ᴡɪᴛʜ ᴛʜᴇ ᴀɪ ʙᴏᴛ:\n\nɢɪᴠᴇ ᴍᴇ ꜱᴛᴀʀꜱ ⭐ :) **"
+    rate_message = (
+        "**Добро пожаловать в форму обратной связи!**\n"
+        "Пожалуйста, оцените свой опыт общения с AI ботом:\n\n"
+        "Поставьте звёзды ⭐ :)"
+    )
     reply_markup = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("⭐️", callback_data="rate_1")],
@@ -58,4 +62,6 @@ async def handle_rate_callback(client: Client, callback_query: CallbackQuery):
     )
 
     # Acknowledge the rating to the user
-    await callback_query.edit_message_text(f"Thank you for your rating of {'⭐️' * rating} stars!")
+    await callback_query.edit_message_text(
+        f"Спасибо за вашу оценку {'⭐️' * rating}!"
+    )
