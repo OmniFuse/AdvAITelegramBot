@@ -19,7 +19,7 @@ TEXT_MODELS = {
 }
 
 IMAGE_MODELS = {
-    "dall-e3": "DALL-E 3",
+    "dall-e-3": "DALL-E 3",
     "flux": "Flux",
     "flux-pro": "Flux Pro"
 }
