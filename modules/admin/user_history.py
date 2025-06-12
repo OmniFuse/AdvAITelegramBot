@@ -267,9 +267,7 @@ async def handle_history_user_selection(client: Client, callback_query: Callback
         if not user_data:
             logger.error(f"User not found in users collection: {user_id}")
             await callback_query.edit_message_text(
-                f"❌ **Пользователь не найден**
-
-"
+                f"❌ **Пользователь не найден**"
                 f"Нет данных для ID {user_id}.",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("⬅️ Back", callback_data="history_search")]
