@@ -68,3 +68,8 @@ PIAPI_API_KEY = os.environ.get('PIAPI_API_KEY') or os.getenv('PIAPI_API_KEY')
 ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY') or os.getenv('ELEVENLABS_API_KEY')
 FAL_AI_KEY = os.environ.get('FAL_AI_KEY') or os.getenv('FAL_AI_KEY')
 
+# Toggle automatic translation of bot messages
+TRANSLATION_ENABLED = (
+    os.environ.get('TRANSLATION_ENABLED', 'true').lower() in ['true', '1', 'yes', 'y']
+)
+

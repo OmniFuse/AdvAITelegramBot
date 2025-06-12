@@ -281,6 +281,7 @@ export ANTHROPIC_API_KEY="your_anthropic_key"
 export PIAPI_API_KEY="your_piapi_key"
 export ELEVENLABS_API_KEY="your_elevenlabs_key"
 export FAL_AI_KEY="your_fal_ai_key"
+export TRANSLATION_ENABLED="false"  # Disable automatic UI translation
 ```
 </details>
 
