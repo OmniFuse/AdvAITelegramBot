@@ -39,6 +39,7 @@ from modules.models.image_service import ImageService
 from modules.user.user_bans_management import ban_user, unban_user, is_user_banned, get_banned_message, get_user_by_id_or_username
 from modules.user.premium_management import add_premium_status, remove_premium_status, is_user_premium, get_premium_status_message, daily_premium_check, get_premium_benefits_message, get_all_premium_users, format_premium_users_list
 import multiprocessing
+import traceback
 
 
 # Create directories if they don't exist
@@ -647,6 +648,7 @@ def create_bot_instance(bot_token, bot_index=1):
         except Exception as e:
             logger.error(f"Error in callback query handler: {e}")
             await error_log(client, "Callback Query Error", str(e))
+            traceback.print_exc()
             try:
                 await callback_query.answer("Произошла ошибка. Попробуйте позже.")
             except:
