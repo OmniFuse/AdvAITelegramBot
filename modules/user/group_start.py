@@ -14,112 +14,110 @@ logger = logging.getLogger(__name__)
 
 # Define button texts with emojis for groups
 group_button_list = [
-    "🛠️ Commands",
-    "🤖 About Bot",
-    "📞 Support"
+    "🛠️ Команды",
+    "🤖 О боте",
+    "📞 Поддержка"
 ]
 
 group_welcome_text = """
-🚀 **Advanced AI Bot** has joined the chat!
+🚀 **Advanced AI Bot присоединился к чату!**
 
-**Hello, {group_name}!**
+**Привет, {group_name}!**
 
-I'm now ready to assist everyone in this group with:
+Теперь я готов помочь всем в этой группе:
 
-• 💬 **Smart Group Conversations**
-• 🔍 **Knowledge Base Access**
-• 🖼️ **Image Generation**
-• 🎙️ **Voice Recognition**
-• 🌐 **Real-time Translation**
-• 📝 **Text Analysis**
+• 💬 **Умные групповые разговоры**
+• 🔍 **Доступ к базе знаний**
+• 🖼️ **Генерация изображений**
+• 🎙️ **Распознавание голоса**
+• 🌐 **Перевод в реальном времени**
+• 📝 **Анализ текста**
 
-Group admins can manage my permissions and settings using the buttons below.
+Администраторы группы могут управлять моими разрешениями и настройками, используя приведённые ниже кнопки.
 """
 
-group_tip_text = "💡 **Group Tip:** use /ai with your question or reply to my messages to interact with me.OR\nuse /img with your prompt to generate images!\n**For more commands use /help.**"
+group_tip_text = "💡 **Совет для группы:** используйте /ai с вашим вопросом или отвечайте на мои сообщения для взаимодействия со мной.\nИли используйте /img с вашим запросом, чтобы создавать изображения!\n**Больше команд: /help.**"
 
 LOGO = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnp4MnR0YXk3ZGNjenR6NGRoaDNkc2h2NDgxa285NnExaGM1MTZmYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S60CrN9iMxFlyp7uM8/giphy.gif"
 
 # Command section for groups
 group_command_text = """
-**🤖 Group Bot Commands 🤖**
+**🤖 Команды бота для групп 🤖
 
-Select a feature below to see detailed commands and examples for group chats.
+Выберите функцию ниже, чтобы увидеть подробные команды и примеры для групп.
 
 **@AdvChatGptBot**
 """
 
 group_ai_commands_text = """
-**🧠 AI Chat Commands for Groups**
+**🧠 Команды AI-чата для групп**
 
-**Basic AI Interaction:**
-- Use `/ai [question]` to ask me directly
-  Example: `/ai What's the capital of Japan?`
-- Reply to my messages to continue the conversation
-- Use `/ask [question]` or `/say [question]` as alternatives
+**Основное взаимодействие:**
+- Используйте `/ai [вопрос]`, чтобы спросить напрямую
+  Пример: `/ai столица Японии?`
+- Отвечайте на мои сообщения для продолжения диалога
+- Также можно использовать `/ask [вопрос]` или `/say [вопрос]`
 
-**Context & Memory:**
-- I maintain context within the same thread of replies
-- Start a new query with any command to reset context
-- Group conversations are kept separate from private chats
+**Контекст и память:**
+- Я сохраняю контекст в цепочке ответов
+- Новый запрос любой командой сбросит контекст
+- Групповые беседы отделены от личных
 
-**Pro Tips for Groups:**
-- For coding questions, I'll properly format the code
-- For long responses, I'll split messages when needed
-- Admins can configure my response style in settings
+**Советы для групп:**
+- Для кода я корректно форматирую блоки
+- Длинные ответы разбиваю на несколько сообщений
+- Админы могут настроить стиль ответов в настройках
 
 **@AdvChatGptBot**
 """
 
 group_image_commands_text = """
-**🖼️ Image Generation in Groups**
+**🖼️ Генерация изображений в группах**
 
-**Creating Images:**
-- Use `/generate [prompt]` or `/img [prompt]` to create images
-  Example: `/img a cyberpunk cityscape at night`
-- Generated images are visible to everyone in the group
-- Use image controls to regenerate or try different styles
+**Создание изображений:**
+- Используйте `/generate [запрос]` или `/img [запрос]` для создания изображений
+  Пример: `/img киберпанк-город ночью`
+- Сгенерированные изображения видят все участники
+- Используйте кнопки изображения для повторов или стилей
 
-**Image Analysis:**
-- Send any image with me mentioned in caption to extract text
-- For document scanning, add "scan" in the caption
-- For image analysis, reply to an image with `/ai analyze this`
+**Анализ изображений:**
+- Отправьте изображение с упоминанием бота для извлечения текста
+- Для сканирования документов добавьте "scan" в подпись
+- Для анализа ответьте на изображение командой `/ai analyze this`
 
-**Group Image Settings:**
-- Group admins can enable/disable image generation
-- Filter settings available for appropriate content
-- Daily limits may apply to prevent spam
-
-**@AdvChatGptBot**
-"""
-
-group_main_commands_text = """
-**📋 Main Group Commands**
-
-**/start** - Get this welcome message
-**/help** - Show group-specific help information
-**/settings** - Configure group bot settings (admin only)
-
-**Group Admin Commands:**
-- `/pin` - Pin a message (requires admin rights)
-- `/unpin` - Unpin a message (requires admin rights) 
-- `/warn` - Warn a user (requires admin rights)
-- Group settings can be configured by group admins only
+**Настройки изображений в группе:**
+- Админы могут включать или выключать генерацию
+- Доступны фильтры для подходящего контента
+- Могут действовать дневные лимиты против спама
 
 **@AdvChatGptBot**
 """
 
-group_admin_commands_text = """
-**⚙️ Bot Admin Commands**
+**📋 Основные команды группы**
 
-These commands are restricted to bot administrators only.
+**/start** - получить приветствие
+**/help** - помощь по функциям в группе
+**/settings** - настройки бота (только для админов)
 
-**/restart** - Restart the bot (requires confirmation)
-**/stats** - View bot statistics and usage data
-**/gleave** - Make the bot leave a group
-**/announce** - Send a message to all users/groups
+**Команды админов группы:**
+- `/pin` - закрепить сообщение
+- `/unpin` - открепить сообщение
+- `/warn` - вынести предупреждение
+- Настройки группы доступны только администраторам
 
-**Note:** These commands are only available to authorized administrators listed in the configuration.
+**@AdvChatGptBot**
+"""
+
+**⚙️ Команды администратора бота**
+
+Эти команды доступны только администраторам бота.
+
+**/restart** - перезапустить бота
+**/stats** - статистика бота
+**/gleave** - выйти из группы
+**/announce** - рассылка всем пользователям/группам
+
+**Примечание:** команды доступны только администраторам, указанным в конфигурации.
 
 **@AdvChatGptBot**
 """
@@ -241,88 +239,73 @@ group_commands_text = """
 **Need more help?** Use the Support button below.
 """
 
-group_features_text = """
-## ⚡ **Advanced Features** in Groups
+## ⚡ **Расширенные возможности** в группах
 
-**Smart Group Interactions:**
-• Multi-language support for diverse groups
-• Context-aware conversations
-• Thread-based replies for organized chats
 
-**Rich Content Generation:**
-• Text-to-image with multiple styles
-• Voice transcription and response
-• Document and image analysis
-
-**Knowledge Tools:**
-• Web searches for latest information
-• Data analysis and visualization
-• Code explanation and debugging
-
-**Group Optimizations:**
-• Auto-moderate content (admin setting)
-• Custom response styles per group
-• Save FAQ answers for quick access
-"""
-
+**Умные взаимодействия:**
+• Поддержка разных языков
+• Контекстные беседы
+• Ответы в ветках для порядка
+**Создание контента:**
+• Текст в изображение с разными стилями
+• Расшифровка голосовых и ответы
+• Анализ документов и изображений
+**Инструменты знаний:**
+• Поиск в интернете
+• Анализ данных и визуализация
+• Объяснение кода и отладка
+**Оптимизация групп:**
+• Автомодерация (для админов)
+• Индивидуальный стиль ответов
+• Сохранение FAQ для быстрого доступа
 about_bot_text = """
-## 🤖 **About Advanced AI Bot**
 
-**Built with cutting-edge AI technology:**
-• GPT-4o for intelligent responses
-• DALL·E 3 for image generation
-• Whisper for voice recognition
-• Multi-modal understanding capabilities
-
-**Privacy & Data:**
-• Message history stored temporarily
-• No training on private conversations
-• Group content kept confidential
-
-**Performance:**
-• Quick response times
-• Handles multiple conversations
-• Regular updates with new features
-
-**Created by [Chandan Singh](https://techycsr.me)** (@techycsr)
+**Создан на базе передовых технологий:**
+• GPT-4o для умных ответов
+• DALL·E 3 для генерации изображений
+• Whisper для распознавания голоса
+• Мультимодальное понимание
+**Конфиденциальность:**
+• История сообщений хранится временно
+• Личные беседы не используются для обучения
+• Контент групп остаётся конфиденциальным
+**Производительность:**
+• Быстрые ответы
+• Одновременная работа с несколькими беседами
+• Регулярные обновления с новыми функциями
 """
-
+**Разработчик — [Chandan Singh](https://techycsr.me)** (@techycsr)
 group_settings_text = """
-## ⚙️ **Group Settings**
 
-**Group Owner/Admin Options:**
-• Set default language for responses
-• Configure response style and tone
-• Enable/disable specific features
-• Control who can use the bot
+## ⚙️ **Настройки группы**
+• Выбор языка ответов
 
-**Available Soon:**
-• Custom welcome messages
-• Auto-moderation settings
-• Scheduled bot actions
-• Activity reports
+**Владельцу/админу доступны:**
 
-**Note:** Only group administrators can change these settings.
+• Настройка стиля и тона
+• Включение/отключение функций
+• Контроль кто может использовать бота
+**Скоро появится:**
+• Своё приветствие
+• Настройки автомодерации
+• Запланированные действия
+• Отчёты активности
 """
-
+**Примечание:** менять эти параметры могут только администраторы группы.
 group_support_text = """
-🤖 **Advanced AI Bot Information**
+🤖 **Информация о боте Advanced AI**
 
-This versatile AI assistant offers numerous capabilities for groups:
-
-• 🖼️ Image Generation with DALL-E-3
-• 🎙️ Voice Message Understanding
-• 📝 Image-to-Text Analysis
-• 💬 Advanced Group Conversations
-• 🌐 Multi-language Support for diverse teams
-
-**Developed by:** [Chandan Singh](https://techycsr.me)
-**Technology:** GPT-4o and GPT-4o-mini
-**Version:** 2.0
-
-**Need assistance?** Choose an option below.
+Этот универсальный ассистент умеет многое в группах:
+• 🖼️ Генерация изображений с DALL‑E 3
+• 🎙️ Понимание голосовых сообщений
+• 📝 Распознавание текста на картинках
+• 💬 Продвинутые групповые диалоги
+• 🌐 Поддержка разных языков
+**Разработка:** [Chandan Singh](https://techycsr.me)
+**Технологии:** GPT-4o и GPT-4o-mini
+**Версия:** 2.0
 """
-
+**Нужна помощь?** Выберите вариант ниже.
 async def handle_group_command_inline(client, callback):
     user_id = callback.from_user.id
     

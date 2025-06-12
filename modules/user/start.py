@@ -14,11 +14,11 @@ from modules.user.ai_model import TEXT_MODELS, IMAGE_MODELS
 # Import for benefits display
 # Define button texts with emojis - NO premium button here
 button_list = [
-    "➕ Add to Group",
-    "🛠️ Commands",
-    "❓ Help",
-    "⚙️ Settings",
-    "📞 Support",
+    "➕ Добавить в группу",
+    "🛠️ Команды",
+    "❓ Помощь",
+    "⚙️ Настройки",
+    "📞 Поддержка",
     "💎 Получить премиум"
 ]
 

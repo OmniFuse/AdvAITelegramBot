@@ -12,17 +12,17 @@ from modules.user.premium_management import is_user_premium
 from modules.user.ai_model import get_user_ai_models, TEXT_MODELS, IMAGE_MODELS
 
 settings_text = """
-**Setting Menu for User {mention}**
+**Меню настроек для {mention}**
 
-**User ID**: {user_id}
-**Account Status**: {premium_status}
-**User Language:** {language}
-**User Voice**: {voice_setting}
-**User Mode**: {mode}
-**AI Text Model**: {ai_text_model}
-**AI Image Model**: {ai_image_model}
+**ID пользователя**: {user_id}
+**Статус аккаунта**: {premium_status}
+**Язык интерфейса:** {language}
+**Голосовой режим**: {voice_setting}
+**Режим ассистента**: {mode}
+**Текстовая модель ИИ**: {ai_text_model}
+**Модель генерации изображений**: {ai_image_model}
 
-You can manage your settings from the start panel below.
+Управляйте настройками через стартовую панель ниже.
 
 **@AdvChatGptBot**
 """
@@ -80,7 +80,7 @@ async def user_settings_panel_command(client, message, edit=False, callback_quer
     )
 
     bot_username = (await client.get_me()).username
-    button_labels = ["⚙️ Open Start Panel", "🔄 Reset Conversation", "📊 System Status", "❌ Close"]
+    button_labels = button_labels = ["⚙️ Открыть стартовую панель", "🔄 Сбросить диалог", "📊 Статус системы", "❌ Закрыть"]
     translated_labels = await batch_translate(button_labels, user_id)
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(translated_labels[0], url=f"https://t.me/{bot_username}?start=settings")],
@@ -111,7 +111,7 @@ async def handle_user_settings_callback(client, callback_query):
         history_collection = get_history_collection()
         history_collection.delete_one({"user_id": user_id})
         history_collection.insert_one({"user_id": user_id, "history": DEFAULT_SYSTEM_MESSAGE})
-        reset_msg = await async_translate_to_lang("🔄 Conversation reset! Your chat history has been cleared.", current_language)
+        reset_msg = await async_translate_to_lang("🔄 Беседа сброшена! История чата очищена.", current_language)
         await callback_query.answer(reset_msg, show_alert=True)
         return
     elif data == "user_settings_status":
