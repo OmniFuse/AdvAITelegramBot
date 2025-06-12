@@ -52,3 +52,31 @@ async def verify_payment(payment_id: str) -> bool:
         payments_col.update_one({'payment_id': payment_id}, {'$set': {'processed': True}})
         return True
     return payment.status == 'succeeded'
+
+
+async def check_pending_payments() -> int:
+    """Iterate over unprocessed payments and grant premium where applicable.
+
+    Returns the number of payments that resulted in a premium grant."""
+    client = get_client()
+    count = 0
+    pending = list(
+        payments_col.find({
+            'processed': False,
+            'status': {'$ne': 'canceled'}
+        })
+    )
+    for record in pending:
+        payment = await client.get_payment(record['payment_id'])
+        payments_col.update_one(
+            {'payment_id': record['payment_id']},
+            {'$set': {'status': payment.status}}
+        )
+        if payment.status == 'succeeded':
+            await add_premium_status(record['user_id'], OWNER_ID, record['days'])
+            payments_col.update_one(
+                {'payment_id': record['payment_id']},
+                {'$set': {'processed': True}}
+            )
+            count += 1
+    return count
