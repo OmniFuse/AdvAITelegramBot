@@ -70,32 +70,31 @@ def create_bot_instance(bot_token, bot_index=1):
     if not os.path.exists(session_dir):
         os.makedirs(session_dir)
     advAiBot = pyrogram.Client(
-            await message.reply_text("Использование: /premium <user_id_or_username> <дней>")
-                await message.reply_text("Количество дней должно быть положительным числом.")
-            await message.reply_text("Неверное значение дней. Укажите целое число.")
-            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
-            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) получил премиум на {days} дн.")
-                await client.send_message(target_user.id, f"🎉 Поздравляем! Вам выдан премиум на {days} дн.\n\nИспользуйте /benefits, чтобы посмотреть привилегии.")
-            await message.reply_text(f"Не удалось выдать премиум {target_user.mention}.")
-            await message.reply_text("Использование: /unpremium <user_id_or_username>")
-            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
-            await message.reply_text(f"Премиум пользователя {target_user.mention} (ID: {target_user.id}) был отменён.")
-                await client.send_message(target_user.id, "ℹ️ Ваш премиум был отменён администратором.")
-            await message.reply_text(f"Пользователь {target_user.mention} не найден среди премиум-активных или не удалось снять премиум.")
-            await message.reply_text("Использование: /ban <user_id_or_username> [причина]")
-        reason = " ".join(message.command[2:]) if len(message.command) > 2 else "Причина не указана."
-            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
-            await message.reply_text("Администраторы не могут быть заблокированы.")
-            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) заблокирован. Причина: {reason}")
-                logger.warning(f"Не удалось уведомить пользователя {target_user.id} о бане: {e}")
-            await message.reply_text(f"Не удалось заблокировать пользователя {target_user.mention}.")
+        f"AdvChatGptBotV2_{bot_index}",
+        bot_token=bot_token,
+        api_id=config.API_KEY,
+        api_hash=config.API_HASH,
+        workdir=session_dir
+    )
+    # Track bot statistics
+    bot_stats = {
+        "messages_processed": 0,
+        "images_generated": 0,
+        "voice_messages_processed": 0,
+        "active_users": set()
+    }
 
-            await message.reply_text("Использование: /unban <user_id_or_username>")
-            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
-            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) разблокирован.")
-                await client.send_message(target_user.id, "🎉 Вы разблокированы и снова можете пользоваться ботом!")
-            await message.reply_text(f"Пользователь {target_user.mention} не найден в списке банов или разблокировка не удалась.")
-        identifier = message.command[1]
+    # Get the cleanup scheduler function to run later
+    cleanup_scheduler = start_cleanup_scheduler()
+
+    # Add a global in-memory dict to store pending group image contexts
+    pending_group_images = {}
+
+    @advAiBot.on_message(filters.command("premium") & filters.user(config.ADMINS))
+    async def premium_command_handler(client, message):
+        if len(message.command) < 3:
+            await message.reply_text("Usage: /premium <user_id_or_username> <days>")
+            return
         try:
             days = int(message.command[2])
             if days <= 0:
