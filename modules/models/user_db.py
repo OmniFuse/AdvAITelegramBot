@@ -80,8 +80,8 @@ def get_user_language(user_id: int) -> str:
     
     if user_lang_doc:
         return user_lang_doc['language']
-    
-    return 'en'  # Default to English if not set
+
+    return 'ru'  # Default to Russian if not set
 
 def check_and_add_blocked_user(user_id: int) -> None:
     """
