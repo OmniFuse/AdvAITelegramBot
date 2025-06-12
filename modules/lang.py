@@ -1,6 +1,6 @@
 from deep_translator import GoogleTranslator
 from pymongo import MongoClient
-from config import DATABASE_URL
+from config import DATABASE_URL, TRANSLATION_ENABLED
 import time
 import asyncio
 import re
@@ -71,7 +71,7 @@ def translate_sync(text, lang):
     Synchronous translation function with direct execution and placeholder preservation.
     First checks the JSON cache, then falls back to online translation.
     """
-    if lang == 'en' or not text.strip():
+    if not TRANSLATION_ENABLED or lang == 'en' or not text.strip():
         return text
         
     # Extract and preserve placeholders
@@ -129,6 +129,10 @@ async def async_translate_to_lang(text, user_id=None, lang=None) -> str:
         # Get language if not provided
         if lang is None and user_id is not None:
             lang = get_user_language(user_id)
+
+        # Short-circuit if translation is disabled
+        if not TRANSLATION_ENABLED:
+            return text
             
         # Skip translation for English or empty strings
         if lang == 'en' or not text.strip():
@@ -271,7 +275,11 @@ def translate_to_lang(text, user_id=None, lang=None):
         # Get language if not provided
         if lang is None and user_id is not None:
             lang = get_user_language(user_id)
-            
+
+        # Short-circuit if translation is disabled
+        if not TRANSLATION_ENABLED:
+            return text
+
         # Skip translation for English or empty strings
         if lang == 'en' or not text.strip():
             return text
@@ -387,6 +395,10 @@ async def batch_translate(texts, user_id=None, lang=None):
     """
     if not texts:
         return []
+
+    # Short-circuit if translation is disabled
+    if not TRANSLATION_ENABLED:
+        return texts.copy()
         
     # Get language if not provided
     if lang is None and user_id is not None:
@@ -434,6 +446,9 @@ async def translate_ui_element(text, user_id=None, lang=None):
     Uses multi-level caching with special handling for short texts
     """
     if not text or text.isspace():
+        return text
+
+    if not TRANSLATION_ENABLED:
         return text
         
     # Get language if not provided
@@ -484,6 +499,9 @@ async def format_with_mention(text, mention, user_id=None, lang=None):
     """
     if not mention or not text:
         return text
+
+    if not TRANSLATION_ENABLED:
+        return text.replace("{mention}", mention)
         
     # If English, just do normal formatting
     if lang == 'en' or (lang is None and user_id is not None and get_user_language(user_id) == 'en'):
