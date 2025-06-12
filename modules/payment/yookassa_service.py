@@ -22,7 +22,7 @@ async def create_payment(user_id: int, amount: int, days: int) -> tuple[str, str
     """Create a payment and store record. Returns confirmation URL and payment ID."""
     client = get_client()
     payment = await client.create_payment(
-        amount=PaymentAmount(amount=amount, currency='RUB'),
+        amount=PaymentAmount(value=amount, currency='RUB'),
         description=f'Premium for {days} days',
         confirmation=Confirmation(type='redirect', return_url=f'https://t.me/{BOT_NAME}'),
         capture=True
