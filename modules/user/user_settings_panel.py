@@ -105,7 +105,7 @@ async def user_settings_panel_command(client, message, edit=False, callback_quer
 async def handle_user_settings_callback(client, callback_query):
     data = callback_query.data
     user_id = callback_query.from_user.id
-    current_language = user_lang_collection.find_one({"user_id": user_id}).get('language', 'en')
+    current_language = user_lang_collection.find_one({"user_id": user_id}).get('language', 'ru')
 
     if data == "user_settings_reset":
         history_collection = get_history_collection()
