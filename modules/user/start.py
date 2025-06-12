@@ -1,6 +1,6 @@
 import pyrogram
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery, InputMediaPhoto, InputMediaAnimation
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery, InputMediaAnimation
 from pyrogram.types import InlineQuery
 from typing import Union
 from modules.lang import async_translate_to_lang, batch_translate, format_with_mention
@@ -51,7 +51,6 @@ welcome_text = """
 tip_text = "💡 **Совет:** Напишите любое сообщение, чтобы начать общение со мной, **или**\nиспользуйте `/img` с вашим запросом для генерации изображений!\n**Больше команд: /help.**"
 
 LOGO = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnp4MnR0YXk3ZGNjenR6NGRoaDNkc2h2NDgxa285NnExaGM1MTZmYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S60CrN9iMxFlyp7uM8/giphy.gif"
-UPI_QR_CODE_PATH = "assets/upi_qr.png" # Placeholder - replace with actual path or URL
 
 async def start(client, message: Message):
     await user_db.check_and_add_user(message.from_user.id)
@@ -188,55 +187,63 @@ async def premium_info_page(client_or_bot, update_obj: Union[Message, CallbackQu
 
 async def premium_plans_callback(client: pyrogram.Client, callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
-    plans_title = await async_translate_to_lang("💎 **Premium Subscription Plans** 💎", user_id)
-    plan1_text = await async_translate_to_lang("₹249 - Weekly Access(~2.9 USD)", user_id)
-    plan2_text = await async_translate_to_lang("₹899 - Monthly Access(~10.5 USD) (Best Value!)", user_id)
-    plan3_text = await async_translate_to_lang("₹9499 - Yearly Access(~111.7 USD) (Ultimate Savings!)", user_id)
-    payment_instructions_upi = await async_translate_to_lang("Scan the **Above QR** or use UPI ID: `csr.info.in@oksbi`", user_id)
-    payment_instructions_usdt = await async_translate_to_lang("For **USDT (TRC20)** payment, use the address: `TUUWniGShkxb8Bg5tj6ZiA9UzHzxxbwi6i`", user_id)
-    paid_button_text = await async_translate_to_lang("✅ I've Paid (Notify Admin)", user_id)
-    back_button_text = await async_translate_to_lang("🔙 Back to Benefits", user_id)
+    plans_title = await async_translate_to_lang("💎 **Премиум тарифы** 💎", user_id)
+    plan1_text = await async_translate_to_lang("249₽ — доступ на неделю", user_id)
+    plan2_text = await async_translate_to_lang("899₽ — доступ на месяц (выгодно)", user_id)
+    plan3_text = await async_translate_to_lang("9499₽ — доступ на год (максимальная выгода)", user_id)
+    paid_button_text = await async_translate_to_lang("✅ Я оплатил", user_id)
+    back_button_text = await async_translate_to_lang("🔙 Назад к преимуществам", user_id)
 
     text = f"{plans_title}\n\n"
     text += f"🔹 {plan1_text}\n"
     text += f"🔹 {plan2_text}\n"
     text += f"🔹 {plan3_text}\n\n"
-    text += f"{payment_instructions_upi}\n\n"
-    text += f"{payment_instructions_usdt}\n\n"
-    text += await async_translate_to_lang("After payment, click below to notify admin and **send a screenshot of your payment to {admin_contact} **for faster verification.\n\n".replace("{admin_contact}", ADMIN_CONTACT_MENTION if ADMIN_CONTACT_MENTION else f"the bot owner (ID: {OWNER_ID})"), user_id)
+    text += await async_translate_to_lang(
+        "После оплаты нажмите кнопку ниже, чтобы уведомить администратора и **отправьте скриншот платежа {admin_contact}** для быстрой проверки.\n\n".replace(
+            "{admin_contact}",
+            ADMIN_CONTACT_MENTION if ADMIN_CONTACT_MENTION else f"владельцу бота (ID: {OWNER_ID})",
+        ),
+        user_id,
+    )
     
+    pay_249 = InlineKeyboardButton("💳 249 ₽", callback_data="yookassa_pay_249")
+    pay_899 = InlineKeyboardButton("💳 899 ₽", callback_data="yookassa_pay_899")
+    pay_9499 = InlineKeyboardButton("💳 9499 ₽", callback_data="yookassa_pay_9499")
     keyboard = InlineKeyboardMarkup([
+        [pay_249, pay_899],
+        [pay_9499],
         [InlineKeyboardButton(paid_button_text, callback_data="premium_paid_notify")],
         [InlineKeyboardButton(back_button_text, callback_data="premium_info")]
     ])
 
     try:
-        # Edit the existing message: change media to QR code and update caption
-        await client.edit_message_media(
-            chat_id=callback_query.message.chat.id,
-            message_id=callback_query.message.id,
-            media=InputMediaPhoto(UPI_QR_CODE_PATH) # UPI_QR_CODE_PATH must be accessible
-        )
-        # Edit caption separately after media is changed
-        await client.edit_message_caption(
-            chat_id=callback_query.message.chat.id,
-            message_id=callback_query.message.id,
-            caption=text,
-            reply_markup=keyboard,
-            parse_mode=ParseMode.MARKDOWN 
-        )
+        if callback_query.message.animation or callback_query.message.photo:
+            await client.edit_message_caption(
+                chat_id=callback_query.message.chat.id,
+                message_id=callback_query.message.id,
+                caption=text,
+                reply_markup=keyboard,
+                parse_mode=ParseMode.MARKDOWN,
+            )
+        else:
+            await client.edit_message_text(
+                chat_id=callback_query.message.chat.id,
+                message_id=callback_query.message.id,
+                text=text,
+                reply_markup=keyboard,
+                parse_mode=ParseMode.MARKDOWN,
+            )
     except Exception as e:
-        print(f"Error editing message for premium_plans_callback: {e}. Fallback: Deleting old and sending new photo message.")
-        # Fallback: If editing media fails (e.g. original message was text-only, or other issue)
-        # delete the old message and send a new one with the photo.
-        try: await callback_query.message.delete() 
-        except: pass # Ignore if deletion fails
-        await client.send_photo(
-            chat_id=callback_query.message.chat.id, 
-            photo=UPI_QR_CODE_PATH, 
-            caption=text, 
+        print(f"Error editing message for premium_plans_callback: {e}. Fallback: sending new message.")
+        try:
+            await callback_query.message.delete()
+        except Exception:
+            pass
+        await client.send_message(
+            chat_id=callback_query.message.chat.id,
+            text=text,
             reply_markup=keyboard,
-            parse_mode=ParseMode.MARKDOWN
+            parse_mode=ParseMode.MARKDOWN,
         )
     await callback_query.answer()
 
@@ -247,16 +254,16 @@ async def premium_paid_notify_callback(client: pyrogram.Client, callback_query: 
     username_str = f"@{user.username}" if user.username else "N/A"
 
     admin_notification_text = (
-        f"🔔 **Premium Payment Notification** 🔔\n\n"
-        f"👤 **User Details:**\n"
-        f"    Mention: {user_mention}\n"
+        f"🔔 **Уведомление об оплате премиум** 🔔\n\n"
+        f"👤 **Данные пользователя:**\n"
+        f"    Упоминание: {user_mention}\n"
         f"    Username: {username_str}\n"
-        f"    User ID: `{user.id}`\n\n"
-        f"💰 User claims to have paid for a premium subscription.\n\n"
-        f"👉 **Action Required:**\n"
-        f"    Please verify the payment. If confirmed, grant premium access using:\n"
-        f"    `/premium {user.id} <days>`\n\n"
-        f"Thank you! ✨"
+        f"    ID: `{user.id}`\n\n"
+        f"💰 Пользователь сообщил об оплате премиума.\n\n"
+        f"👉 **Необходимо проверить платеж**\n"
+        f"    После подтверждения выдать премиум командой:\n"
+        f"    `/premium {user.id} <дней>`\n\n"
+        f"Спасибо! ✨"
     )
     
     admin_to_notify = OWNER_ID 
@@ -266,12 +273,12 @@ async def premium_paid_notify_callback(client: pyrogram.Client, callback_query: 
     except Exception as e:
         print(f"Error sending premium paid notification to admin {admin_to_notify}: {e}")
 
-    user_reply_base = "✅ Your payment notification has been sent to the admin. **Please remember to send a screenshot of your payment to {admin_contact} for faster verification.** They will contact you if there are issues or once your premium is active."
-    admin_contact_text = ADMIN_CONTACT_MENTION if ADMIN_CONTACT_MENTION else f"the bot owner (ID: {OWNER_ID})"
+    user_reply_base = "✅ Уведомление об оплате отправлено администратору. **Пожалуйста, отправьте скриншот платежа {admin_contact} для быстрой проверки.** Администратор свяжется с вами при возникновении вопросов или после активации премиума."
+    admin_contact_text = ADMIN_CONTACT_MENTION if ADMIN_CONTACT_MENTION else f"владельцу бота (ID: {OWNER_ID})"
     user_reply_text_formatted = user_reply_base.replace("{admin_contact}", admin_contact_text)
     user_reply_text_translated = await async_translate_to_lang(user_reply_text_formatted, user.id)
     
-    btn_back_to_plans_text = await async_translate_to_lang("💳 View Plans Again", user.id)
+    btn_back_to_plans_text = await async_translate_to_lang("💳 Вернуться к тарифам", user.id)
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(btn_back_to_plans_text, callback_data="premium_plans")]
     ])
@@ -292,5 +299,39 @@ async def premium_paid_notify_callback(client: pyrogram.Client, callback_query: 
         )
         try: await callback_query.message.delete() 
         except: pass
-    await callback_query.answer("Notification sent to admin! Please also send them a screenshot.", show_alert=True)
+    await callback_query.answer("Уведомление отправлено администратору! Не забудьте прислать ему скриншот.", show_alert=True)
+
+
+PAYMENT_PLANS = {
+    '249': {'amount': 249, 'days': 7},
+    '899': {'amount': 899, 'days': 30},
+    '9499': {'amount': 9499, 'days': 365}
+}
+
+async def yookassa_pay_callback(client: pyrogram.Client, callback_query: CallbackQuery):
+    key = callback_query.data.split('_')[-1]
+    plan = PAYMENT_PLANS.get(key)
+    if not plan:
+        await callback_query.answer("Неизвестный тариф", show_alert=True)
+        return
+    from modules.payment.yookassa_service import create_payment
+    url, payment_id = await create_payment(callback_query.from_user.id, plan['amount'], plan['days'])
+    pay_text = await async_translate_to_lang("Нажмите кнопку ниже для оплаты через YooKassa", callback_query.from_user.id)
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🌐 Оплатить", url=url)],
+        [InlineKeyboardButton("✅ Оплатил", callback_data=f'check_payment_{payment_id}')]
+    ])
+    await client.send_message(callback_query.message.chat.id, pay_text, reply_markup=keyboard)
+    await callback_query.answer()
+
+async def check_payment_status_callback(client: pyrogram.Client, callback_query: CallbackQuery):
+    payment_id = callback_query.data.split('_', 2)[2]
+    from modules.payment.yookassa_service import verify_payment
+    success = await verify_payment(payment_id)
+    if success:
+        msg = await async_translate_to_lang("Оплата прошла успешно! Премиум активирован.", callback_query.from_user.id)
+        await callback_query.answer(msg, show_alert=True)
+    else:
+        msg = await async_translate_to_lang("Оплата еще не завершена.", callback_query.from_user.id)
+        await callback_query.answer(msg, show_alert=True)
 
