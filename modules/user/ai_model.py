@@ -25,7 +25,7 @@ IMAGE_MODELS = {
 }
 
 DEFAULT_TEXT_MODEL = "gpt-4o"
-DEFAULT_IMAGE_MODEL = "dall-e3"
+DEFAULT_IMAGE_MODEL = "dall-e-3"
 
 # --- Restricted Models ---
 RESTRICTED_TEXT_MODELS = {"gpt-4.1", "qwen3"}
