@@ -70,31 +70,31 @@ def create_bot_instance(bot_token, bot_index=1):
     if not os.path.exists(session_dir):
         os.makedirs(session_dir)
     advAiBot = pyrogram.Client(
-        f"ChatAllV2_{bot_index}",
-        bot_token=bot_token,
-        api_id=config.API_KEY,
-        api_hash=config.API_HASH,
-        workdir=session_dir
-    )
-    # Track bot statistics
-    bot_stats = {
-        "messages_processed": 0,
-        "images_generated": 0,
-        "voice_messages_processed": 0,
-        "active_users": set()
-    }
+            await message.reply_text("Использование: /premium <user_id_or_username> <дней>")
+                await message.reply_text("Количество дней должно быть положительным числом.")
+            await message.reply_text("Неверное значение дней. Укажите целое число.")
+            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
+            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) получил премиум на {days} дн.")
+                await client.send_message(target_user.id, f"🎉 Поздравляем! Вам выдан премиум на {days} дн.\n\nИспользуйте /benefits, чтобы посмотреть привилегии.")
+            await message.reply_text(f"Не удалось выдать премиум {target_user.mention}.")
+            await message.reply_text("Использование: /unpremium <user_id_or_username>")
+            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
+            await message.reply_text(f"Премиум пользователя {target_user.mention} (ID: {target_user.id}) был отменён.")
+                await client.send_message(target_user.id, "ℹ️ Ваш премиум был отменён администратором.")
+            await message.reply_text(f"Пользователь {target_user.mention} не найден среди премиум-активных или не удалось снять премиум.")
+            await message.reply_text("Использование: /ban <user_id_or_username> [причина]")
+        reason = " ".join(message.command[2:]) if len(message.command) > 2 else "Причина не указана."
+            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
+            await message.reply_text("Администраторы не могут быть заблокированы.")
+            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) заблокирован. Причина: {reason}")
+                logger.warning(f"Не удалось уведомить пользователя {target_user.id} о бане: {e}")
+            await message.reply_text(f"Не удалось заблокировать пользователя {target_user.mention}.")
 
-    # Get the cleanup scheduler function to run later
-    cleanup_scheduler = start_cleanup_scheduler()
-
-    # Add a global in-memory dict to store pending group image contexts
-    pending_group_images = {}
-
-    @advAiBot.on_message(filters.command("premium") & filters.user(config.ADMINS))
-    async def premium_command_handler(client, message):
-        if len(message.command) < 3:
-            await message.reply_text("Usage: /premium <user_id_or_username> <days>")
-            return
+            await message.reply_text("Использование: /unban <user_id_or_username>")
+            await message.reply_text(f"Не удалось найти пользователя: {identifier}")
+            await message.reply_text(f"Пользователь {target_user.mention} (ID: {target_user.id}) разблокирован.")
+                await client.send_message(target_user.id, "🎉 Вы разблокированы и снова можете пользоваться ботом!")
+            await message.reply_text(f"Пользователь {target_user.mention} не найден в списке банов или разблокировка не удалась.")
         identifier = message.command[1]
         try:
             days = int(message.command[2])
@@ -309,7 +309,7 @@ def create_bot_instance(bot_token, bot_index=1):
         is_banned, reason = await is_user_banned(user_id)
         if is_banned:
             logger.warning(f"Banned user {user_id} attempted to use inline query. Reason: {reason}")
-            await inline_query.answer([], switch_pm_text="You are banned from using this bot.", switch_pm_parameter="banned")
+            await inline_query.answer([], switch_pm_text="Вы заблокированы и не можете использовать бота.", switch_pm_parameter="banned")
             return
         bot_stats["active_users"].add(inline_query.from_user.id)
         logger.info(f"Processing inline query from user {inline_query.from_user.id}: '{inline_query.query}'")
@@ -321,16 +321,16 @@ def create_bot_instance(bot_token, bot_index=1):
     async def announce_callback_handler(bot, callback_query):
         user_id = callback_query.from_user.id
         if not hasattr(bot, "_announce_pending") or user_id not in bot._announce_pending:
-            await callback_query.answer("No pending announcement.", show_alert=True)
+            await callback_query.answer("Нет запланированного объявления.", show_alert=True)
             return
         if callback_query.data == "announce_cancel":
             del bot._announce_pending[user_id]
-            await callback_query.edit_message_text("❌ Broadcast cancelled.")
+            await callback_query.edit_message_text("❌ Рассылка отменена.")
             return
         # Confirm send
         text = bot._announce_pending[user_id]
         await callback_query.edit_message_text(
-            f"📣 Sending broadcast to all users...\n\n{text}",
+            f"📣 Отправка рассылки всем пользователям...\n\n{text}",
             parse_mode=ParseMode.MARKDOWN
         )
         # Send to users with Markdown
@@ -349,7 +349,7 @@ def create_bot_instance(bot_token, bot_index=1):
                 banned_msg_text = await get_banned_message((await is_user_banned(callback_query.from_user.id))[1])
                 await callback_query.answer(banned_msg_text, show_alert=True)
             except: # Catch any exception during answer to prevent crash
-                 await callback_query.answer("You are banned from using this bot.", show_alert=True)
+                 await callback_query.answer("Вы заблокированы и не можете использовать бота.", show_alert=True)
             return
         try:
             # Handle restart callbacks
@@ -643,13 +643,13 @@ def create_bot_instance(bot_token, bot_index=1):
                 return
             else:
                 # Unknown callback, just acknowledge it
-                await callback_query.answer("Unknown command")
+                await callback_query.answer("Неизвестная команда")
             
         except Exception as e:
             logger.error(f"Error in callback query handler: {e}")
             await error_log(client, "Callback Query Error", str(e))
             try:
-                await callback_query.answer("An error occurred. Please try again later.")
+                await callback_query.answer("Произошла ошибка. Попробуйте позже.")
             except:
                 pass
 
@@ -707,7 +707,7 @@ def create_bot_instance(bot_token, bot_index=1):
             await channel_log(bot, update, "/gleave", f"Admin leaving group {update.chat.id if update.chat else 'unknown'}")
         else:
             logger.warning(f"Unauthorized user {update.from_user.id} attempted to use gleave command")
-            await update.reply_text("⛔ You are not authorized to use this command.")
+            await update.reply_text("⛔ У вас нет прав использовать эту команду.")
             await channel_log(bot, update, "/gleave", f"Unauthorized access attempt", level="WARNING")
 
     @advAiBot.on_message(filters.command("rate") & filters.private)
@@ -724,7 +724,7 @@ def create_bot_instance(bot_token, bot_index=1):
             await channel_log(bot, update, "/invite", "Admin used invite command")
         else:
             logger.warning(f"Unauthorized user {update.from_user.id} attempted to use invite command")
-            await update.reply_text("⛔ You are not authorized to use this command.")
+            await update.reply_text("⛔ У вас нет прав использовать эту команду.")
             await channel_log(bot, update, "/invite", f"Unauthorized access attempt", level="WARNING")
 
     @advAiBot.on_message(filters.command("uinfo"))
@@ -735,7 +735,7 @@ def create_bot_instance(bot_token, bot_index=1):
             await channel_log(bot, update, "/uinfo", "Admin requested user info")
         else:
             logger.warning(f"Unauthorized user {update.from_user.id} attempted to use uinfo command")
-            await update.reply_text("⛔ You are not authorized to use this command.")
+            await update.reply_text("⛔ У вас нет прав использовать эту команду.")
             await channel_log(bot, update, "/uinfo", f"Unauthorized access attempt", level="WARNING")
 
     # Register uinfo panel callbacks
@@ -852,12 +852,12 @@ def create_bot_instance(bot_token, bot_index=1):
         # Prompt user for AI response
         markup = InlineKeyboardMarkup([
             [
-                InlineKeyboardButton("✅ Yes, analyze with AI", callback_data=f"group_img_ai_yes_{update.chat.id}_{update.message_id}"),
-                InlineKeyboardButton("❌ No", callback_data=f"group_img_ai_no_{update.chat.id}_{update.message_id}")
+                InlineKeyboardButton("✅ Да, проанализировать AI", callback_data=f"group_img_ai_yes_{update.chat.id}_{update.message_id}"),
+                InlineKeyboardButton("❌ Нет", callback_data=f"group_img_ai_no_{update.chat.id}_{update.message_id}")
             ]
         ])
         await update.reply_text(
-            "🤖 Do you want an AI response for this image and caption?",
+            "🤖 Нужен ли AI-ответ для этого изображения и подписи?",
             reply_markup=markup
         )
         # Log usage
@@ -874,15 +874,15 @@ def create_bot_instance(bot_token, bot_index=1):
         key = (chat_id, message_id)
         context = pending_group_images.get(key)
         if not context:
-            await callback_query.answer("Image context expired or not found.", show_alert=True)
+            await callback_query.answer("Срок действия изображения истёк или не найден.", show_alert=True)
             return
         if action == "no":
-            await callback_query.message.edit_text("❌ AI analysis cancelled for this image.")
+            await callback_query.message.edit_text("❌ Анализ изображения отменён.")
             pending_group_images.pop(key, None)
-            await callback_query.answer("Cancelled.")
+            await callback_query.answer("Отменено.")
             return
         # If 'yes', process the image and generate AI response
-        await callback_query.message.edit_text("🔍 Processing image and generating AI response...")
+        await callback_query.message.edit_text("🔍 Обрабатываю изображение и генерирую AI-ответ...")
         from modules.image.img_to_text import extract_text_from_image
         from modules.core.database import get_history_collection
         from modules.models.ai_res import get_response, DEFAULT_SYSTEM_MESSAGE
@@ -899,16 +899,16 @@ def create_bot_instance(bot_token, bot_index=1):
             file = await bot.download_media(photo_obj.file_id, file_name=file_path)
             extracted_text, error = await extract_text_from_image(file)
             if error:
-                await callback_query.message.edit_text(f"❌ Text Extraction Failed\n\n{error}")
+                await callback_query.message.edit_text(f"❌ Ошибка извлечения текста\n\n{error}")
                 pending_group_images.pop(key, None)
                 return
             if not extracted_text or extracted_text.strip() == "":
-                await callback_query.message.edit_text("⚠️ No text detected in the image.")
+                await callback_query.message.edit_text("⚠️ Текст на изображении не обнаружен.")
                 pending_group_images.pop(key, None)
                 return
             # Combine extracted text and caption
             user_question = caption
-            combined_text = f"{extracted_text}\n\n[User's question: {user_question}]"
+            combined_text = f"{extracted_text}\n\n[Вопрос пользователя: {user_question}]"
             # Update user history (like in aires)
             history_collection = get_history_collection()
             user_history = history_collection.find_one({"user_id": user_id})
@@ -929,7 +929,7 @@ def create_bot_instance(bot_token, bot_index=1):
                 upsert=True
             )
             await callback_query.message.edit_text(
-                f"📝 **Image Text Analysis**\n\n{ai_response}",
+                f"📝 **Анализ текста изображения**\n\n{ai_response}",
                 disable_web_page_preview=True
             )
             pending_group_images.pop(key, None)
@@ -939,12 +939,12 @@ def create_bot_instance(bot_token, bot_index=1):
                     os.remove(file)
             except Exception as e:
                 logger.error(f"Error removing temporary file: {e}")
-            await callback_query.answer("AI response generated.")
+            await callback_query.answer("AI-ответ готов.")
         except Exception as e:
             logger.error(f"Error processing group image AI: {e}")
-            await callback_query.message.edit_text(f"Error processing the image: {str(e)}")
+            await callback_query.message.edit_text(f"Ошибка обработки изображения: {str(e)}")
             pending_group_images.pop(key, None)
-            await callback_query.answer("Error.")
+            await callback_query.answer("Ошибка.")
 
     @advAiBot.on_message(filters.command("settings"))
     async def settings_command(bot, update):
@@ -958,11 +958,11 @@ def create_bot_instance(bot_token, bot_index=1):
     async def stats_command(bot, update):
         logger.info(f"Admin {update.from_user.id} requested stats")
         stats_text = (
-            "📊 **Bot Statistics**\n\n"
-            f"💬 Messages Processed: {bot_stats['messages_processed']}\n"
-            f"🖼️ Images Generated: {bot_stats['images_generated']}\n"
-            f"️ Voice Messages: {bot_stats['voice_messages_processed']}\n"
-            f"👥 Active Users: {len(bot_stats['active_users'])}\n"
+            "📊 **Статистика бота**\n\n"
+            f"💬 Сообщений обработано: {bot_stats['messages_processed']}\n"
+            f"🖼️ Сгенерировано изображений: {bot_stats['images_generated']}\n"
+            f"️ Голосовых сообщений: {bot_stats['voice_messages_processed']}\n"
+            f"👥 Активных пользователей: {len(bot_stats['active_users'])}\n"
         )
         await update.reply_text(stats_text)
         await channel_log(bot, update, "/stats", "Admin requested bot statistics")
@@ -976,13 +976,13 @@ def create_bot_instance(bot_token, bot_index=1):
                 # Show preview and ask for confirmation
                 keyboard = InlineKeyboardMarkup([
                     [
-                        InlineKeyboardButton("✅ Confirm Send", callback_data="announce_confirm"),
-                        InlineKeyboardButton("❌ Cancel", callback_data="announce_cancel")
+                        InlineKeyboardButton("✅ Подтвердить отправку", callback_data="announce_confirm"),
+                        InlineKeyboardButton("❌ Отмена", callback_data="announce_cancel")
                     ]
                 ])
                 bold_text = f"**{text}**" if not text.strip().startswith("**") else text
                 await update.reply_text(
-                    f"**Broadcast Preview:**\n\n{bold_text}",
+                    f"**Предпросмотр рассылки:**\n\n{bold_text}",
                     reply_markup=keyboard,
                     parse_mode=ParseMode.MARKDOWN
                 )
@@ -992,13 +992,13 @@ def create_bot_instance(bot_token, bot_index=1):
             except IndexError:
                 logger.warning(f"Admin {update.from_user.id} attempted announce without message")
                 await update.reply_text(
-                    "⚠️ Please provide a message to broadcast.\n\n"
-                    "Example: `/announce Hello everyone! We've added new features.`",
+                    "⚠️ Укажите текст для рассылки.\n\n"
+                    "Пример: `/announce Привет всем! Мы добавили новые функции.`",
                     parse_mode=ParseMode.MARKDOWN
                 )
         else:
             logger.warning(f"Unauthorized user {update.from_user.id} attempted to use announce command")
-            await update.reply_text("⛔ You are not authorized to use this command.")
+            await update.reply_text("⛔ У вас нет прав использовать эту команду.")
             await channel_log(bot, update, "/announce", f"Unauthorized access attempt", level="WARNING")
 
     @advAiBot.on_message(filters.command("logs") & filters.user(config.ADMINS))
@@ -1008,8 +1008,8 @@ def create_bot_instance(bot_token, bot_index=1):
         try:
             # Send status message
             status_msg = await update.reply_text(
-                "📊 **Retrieving Logs**\n\n"
-                "Preparing the most recent logs... This will take just a moment."
+                "📊 **Получение логов**\n\n"
+                "Подготавливаю последние записи... Это займёт пару секунд."
             )
             
             # Get the latest 500 lines from the main log file
@@ -1032,7 +1032,7 @@ def create_bot_instance(bot_token, bot_index=1):
                 await bot.send_document(
                     chat_id=update.chat.id,
                     document=temp_log_file,
-                    caption=f"📋 **Latest Bot Logs**\n\nShowing the most recent 500 log entries as of {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                    caption=f"📋 **Последние логи**\n\nПоказываю 500 последних записей на {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
                 )
                 
                 # Delete the temporary file
@@ -1042,17 +1042,17 @@ def create_bot_instance(bot_token, bot_index=1):
                     logger.error(f"Error removing temporary log file: {str(e)}")
                 
                 # Update status message
-                await status_msg.edit_text("✅ **Logs Retrieved Successfully**")
+                await status_msg.edit_text("✅ **Логи получены**")
                 
             else:
-                await status_msg.edit_text("❌ No log file found. The bot may not have generated any logs yet.")
+                await status_msg.edit_text("❌ Файл логов не найден. Бот, возможно, ещё не создал логи.")
             
             # Log this action
             await channel_log(bot, update, "/logs", "Admin requested latest logs")
             
         except Exception as e:
             logger.error(f"Error in logs command: {str(e)}")
-            await update.reply_text(f"❌ **Error**\n\nFailed to retrieve logs: {str(e)}")
+            await update.reply_text(f"❌ **Ошибка**\n\nНе удалось получить логи: {str(e)}")
             
             # Log the error
             await error_log(bot, "LOGS_COMMAND", str(e), context=update.text, user_id=update.from_user.id)
@@ -1069,9 +1069,9 @@ def create_bot_instance(bot_token, bot_index=1):
         success = await ImageService.clear_user_image_cache(user_id)
         
         if success:
-            await message.reply_text("✅ **Your image cache has been cleared**\n\nAll stored image data has been removed.")
+            await message.reply_text("✅ **Ваш кэш изображений очищен**\n\nВсе сохранённые данные удалены.")
         else:
-            await message.reply_text("ℹ️ **No image cache found**\n\nYou don't have any cached images to clear.")
+            await message.reply_text("ℹ️ **Кэш изображений не найден**\n\nУ вас нет сохранённых изображений для очистки.")
         
         await channel_log(client, message, "/clear_cache", f"User cleared their image cache")
 
@@ -1080,7 +1080,7 @@ def create_bot_instance(bot_token, bot_index=1):
         from modules.maintenance import is_admin_user
         
         if not await is_admin_user(callback_query.from_user.id):
-            await callback_query.answer("You don't have permission to view stats.", show_alert=True)
+            await callback_query.answer("У вас нет прав просматривать статистику.", show_alert=True)
             return
         
         stats_text = (
@@ -1099,7 +1099,7 @@ def create_bot_instance(bot_token, bot_index=1):
                 await callback_query.answer(short_stats, show_alert=True)
             else:
                 # Just acknowledge the callback
-                await callback_query.answer("Could not display stats")
+                await callback_query.answer("Не удалось показать статистику")
         
         # Refresh the admin panel with error handling
         try:
@@ -1149,8 +1149,8 @@ def create_bot_instance(bot_token, bot_index=1):
         # Check if user ID is provided
         if len(update.command) != 2:
             await update.reply_text(
-                "⚠️ **Usage**: `/history USER_ID`\n\n"
-                "Please provide the user ID to view chat history."
+                "⚠️ **Использование**: `/history USER_ID`\n\n"
+                "Пожалуйста, укажите ID пользователя для просмотра истории."
             )
             return
         
@@ -1160,8 +1160,8 @@ def create_bot_instance(bot_token, bot_index=1):
             
             # Send status message
             status_msg = await update.reply_text(
-                f"🔍 **Retrieving Chat History**\n\n"
-                f"Fetching chat logs for user {target_user_id}... Please wait."
+                f"🔍 **Получение истории чата**\n\n"
+                f"Получаю историю пользователя {target_user_id}... Пожалуйста, подождите."
             )
             
             # Call the function to get user chat history
@@ -1172,10 +1172,10 @@ def create_bot_instance(bot_token, bot_index=1):
             await channel_log(bot, update, "/history", f"Admin requested chat history for user {target_user_id}")
             
         except ValueError:
-            await update.reply_text("❌ **Error**: User ID must be a valid integer.")
+            await update.reply_text("❌ **Ошибка**: ID пользователя должен быть целым числом.")
         except Exception as e:
-            logger.error(f"Error retrieving chat history: {e}")
-            await update.reply_text(f"❌ **Error retrieving chat history**: {str(e)}")
+            logger.error(f"Ошибка получения истории чата: {e}")
+            await update.reply_text(f"❌ **Ошибка получения истории чата**: {str(e)}")
             await error_log(bot, "HISTORY_COMMAND", str(e), context=update.text, user_id=update.from_user.id)
 
 
@@ -1189,7 +1189,7 @@ def create_bot_instance(bot_token, bot_index=1):
         
         # Add a button to contact admin or view donation options
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("💰 Donate / Upgrade to Premium", url="https://t.me/artemevkhv")]
+            [InlineKeyboardButton("💰 Донат или обновление до премиума", url="https://t.me/techycsr")]
           
         ])
         
@@ -1222,11 +1222,11 @@ def create_bot_instance(bot_token, bot_index=1):
                     await update_obj.answer(banned_msg_text, show_alert=True)
                 except Exception as e: # Catch any exception during answer to prevent crash
                      logger.error(f"Error answering banned callback: {e}")
-                     await update_obj.answer("You are banned from using this bot.", show_alert=True)
+                     await update_obj.answer("Вы заблокированы и не можете использовать бота.", show_alert=True)
             elif hasattr(update_obj, 'reply_text'): # It's a Message
                 await update_obj.reply_text(banned_msg_text, parse_mode=ParseMode.HTML)
             elif hasattr(update_obj, 'answer') and hasattr(update_obj, 'query'): # It's an InlineQuery
-                 await update_obj.answer([], switch_pm_text="You are banned from using this bot.", switch_pm_parameter="banned_user")
+                 await update_obj.answer([], switch_pm_text="Вы заблокированы и не можете использовать бота.", switch_pm_parameter="banned_user")
             return True
         return False
 
@@ -1261,8 +1261,8 @@ def create_bot_instance(bot_token, bot_index=1):
                     
                     # Send status message
                     status_msg = await message.reply_text(
-                        f"🔍 **Retrieving Chat History**\n\n"
-                        f"Fetching chat logs for user {target_user_id}... Please wait."
+                        f"🔍 **Получение истории чата**\n\n"
+                        f"Получаю историю пользователя {target_user_id}... Пожалуйста, подождите."
                     )
                     
                     # Call the function to get user chat history
@@ -1273,10 +1273,10 @@ def create_bot_instance(bot_token, bot_index=1):
                     await channel_log(bot, message, "history_search", f"Admin searched chat history for user {target_user_id}")
                     
                 except ValueError:
-                    await message.reply_text("❌ **Error**: User ID must be a valid integer.")
+                    await message.reply_text("❌ **Ошибка**: ID пользователя должен быть целым числом.")
                 except Exception as e:
-                    logger.error(f"Error retrieving chat history: {e}")
-                    await message.reply_text(f"❌ **Error retrieving chat history**: {str(e)}")
+                    logger.error(f"Ошибка получения истории чата: {e}")
+                    await message.reply_text(f"❌ **Ошибка получения истории чата**: {str(e)}")
                     
                 # Try to delete the original message to clean up
                 try:
@@ -1312,9 +1312,9 @@ def run_bot(bot_token, bot_index=1):
     bot.run()
 
 if __name__ == "__main__":
-    logger.info("🤖 Advanced AI Telegram Bot starting...")
-    print("🤖 Advanced AI Telegram Bot starting...")
-    print("✨ Optimized for performance and modern UI")
+    logger.info("🤖 Запуск продвинутого AI-бота...")
+    print("🤖 Запуск продвинутого AI-бота...")
+    print("✨ Оптимизирован для производительности и современного интерфейса")
 
     if config.MULTIPLE_BOTS:
         bot_tokens = config.get_bot_tokens()
