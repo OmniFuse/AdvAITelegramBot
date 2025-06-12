@@ -1,8 +1,7 @@
 import datetime
 from typing import Optional
 from yookassa_api import AsyncClient
-from yookassa_api.schemas.payment import PaymentAmount
-from yookassa_api.schemas.confirmation import Confirmation
+from yookassa_api.schemas import PaymentAmount, Confirmation
 from config import YOOKASSA_SHOP_ID, YOOKASSA_API_KEY, BOT_NAME, OWNER_ID
 from modules.core.database import db_service
 from modules.user.premium_management import add_premium_status
