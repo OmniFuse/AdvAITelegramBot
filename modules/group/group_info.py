@@ -36,18 +36,18 @@ async def info_command(client: Client, message: Message) -> None:
                             target_user = await client.get_users(username)
                             target_user_id = target_user.id
                         except Exception:
-                            await message.reply_text("Could not find user with that username.")
+                            await message.reply_text("Не удалось найти пользователя с таким именем.")
                             return
                     except Exception as e:
                         await message.reply_text(f"Error finding user: {e}")
                         return
                 else:
                     await message.reply_text(
-                        "Please specify a user ID or username, or reply to a message from the user."
+                        "Пожалуйста, укажите ID или имя пользователя либо ответьте на сообщение этого пользователя."
                     )
                     return
             if not target_user_id:
-                await message.reply_text("Could not determine target user.")
+                await message.reply_text("Не удалось определить целевого пользователя.")
                 return
             # Format user information
             user_info = f"👤 <b>User Information</b>\n\n"
@@ -77,7 +77,7 @@ async def info_command(client: Client, message: Message) -> None:
             await message.reply_text(f"Error processing command: {e}")
             logger.error(f"Error in info command: {e}")
     else:
-        await message.reply_text("Only admins can use this command.")
+        await message.reply_text("Эту команду могут использовать только администраторы.")
 
 # Callback: Show user settings
 async def uinfo_settings_callback(client: Client, callback_query: CallbackQuery):

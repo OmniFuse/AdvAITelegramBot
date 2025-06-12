@@ -13,12 +13,7 @@ user_lang_collection = db['user_lang']
 
 # Dictionary of languages with flags
 languages = {
-    "en": "🇬🇧 English",
-    "hi": "🇮🇳 Hindi",
-    "zh": "🇨🇳 Chinese",
-    "ar": "🇸🇦 Arabic",
-    "fr": "🇫🇷 French",
-    "ru": "🇷🇺 Russian"
+    "ru": "🇷🇺 Русский"
 }
 
 # Function to handle settings language callback
@@ -30,7 +25,7 @@ async def settings_langs_callback(client, callback):
     if user_lang_doc:
         current_language = user_lang_doc['language']
     else:
-        current_language = "en"
+        current_language = "ru"
         user_lang_collection.insert_one({"user_id": user_id, "language": current_language})
 
     current_language_label = languages[current_language]
@@ -45,21 +40,8 @@ async def settings_langs_callback(client, callback):
 
     keyboard = InlineKeyboardMarkup(
         [
-            [
-                InlineKeyboardButton("🇮🇳 Hindi", callback_data="language_hi"),
-                InlineKeyboardButton("🇬🇧 English", callback_data="language_en")
-            ],
-            [
-                InlineKeyboardButton("🇨🇳 Chinese", callback_data="language_zh"),
-                InlineKeyboardButton("🇸🇦 Arabic", callback_data="language_ar")
-            ],
-            [
-                InlineKeyboardButton("🇫🇷 French", callback_data="language_fr"),
-                InlineKeyboardButton("🇷🇺 Russian", callback_data="language_ru")
-            ],
-            [
-                InlineKeyboardButton(back_btn, callback_data="settings_back")
-            ]
+            [InlineKeyboardButton("🇷🇺 Русский", callback_data="language_ru")],
+            [InlineKeyboardButton(back_btn, callback_data="settings_back")]
         ]
     )
 
@@ -94,21 +76,8 @@ async def change_language_setting(client, callback):
 
     keyboard = InlineKeyboardMarkup(
         [
-            [
-                InlineKeyboardButton("🇮🇳 Hindi", callback_data="language_hi"),
-                InlineKeyboardButton("🇬🇧 English", callback_data="language_en")
-            ],
-            [
-                InlineKeyboardButton("🇨🇳 Chinese", callback_data="language_zh"),
-                InlineKeyboardButton("🇸🇦 Arabic", callback_data="language_ar")
-            ],
-            [
-                InlineKeyboardButton("🇫🇷 French", callback_data="language_fr"),
-                InlineKeyboardButton("🇷🇺 Russian", callback_data="language_ru")
-            ],
-            [
-                InlineKeyboardButton(back_btn, callback_data="settings_back")
-            ]
+            [InlineKeyboardButton("🇷🇺 Русский", callback_data="language_ru")],
+            [InlineKeyboardButton(back_btn, callback_data="settings_back")]
         ]
     )
 
@@ -120,10 +89,5 @@ async def change_language_setting(client, callback):
 
 
 languages = {
-    "en": "🇬🇧 English",
-    "hi": "🇮🇳 Hindi",
-    "zh": "🇨🇳 Chinese",
-    "ar": "🇸🇦 Arabic",
-    "fr": "🇫🇷 French",
-    "ru": "🇷🇺 Russian"
+    "ru": "🇷🇺 Русский"
 }

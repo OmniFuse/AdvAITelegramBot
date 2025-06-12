@@ -25,12 +25,7 @@ modes = {
 }
 
 languages = {
-    "en": "🇬🇧 English",
-    "hi": "🇮🇳 Hindi",
-    "zh": "🇨🇳 Chinese",
-    "ar": "🇸🇦 Arabic",
-    "fr": "🇫🇷 French",
-    "ru": "🇷🇺 Russian"
+    "ru": "🇷🇺 Русский"
 }
 
 # Remove the /settings command panel logic from this file. Only keep inline/start settings logic.

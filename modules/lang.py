@@ -26,12 +26,7 @@ _translation_executor = ThreadPoolExecutor(max_workers=4)
 
 # Language code mapping (deep_translator uses some different codes than our system)
 LANGUAGE_CODE_MAP = {
-    'zh': 'zh-CN',  # Convert our 'zh' code to what deep_translator expects
-    'ar': 'ar',
-    'fr': 'fr',
-    'ru': 'ru',
-    'hi': 'hi',
-    'en': 'en'
+    'ru': 'ru'
 }
 
 # Simple in-memory cache for translations to avoid repeated API calls

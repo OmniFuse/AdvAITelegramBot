@@ -36,12 +36,7 @@ modes = {
 }
 
 languages = {
-    "en": "🇬🇧 English",
-    "hi": "🇮🇳 Hindi",
-    "zh": "🇨🇳 Chinese",
-    "ar": "🇸🇦 Arabic",
-    "fr": "🇫🇷 French",
-    "ru": "🇷🇺 Russian"
+    "ru": "🇷🇺 Русский"
 }
 
 settings_text_template = """
@@ -63,7 +58,7 @@ You can change your settings from below options.
 async def settings_inline(client_obj, callback: CallbackQuery):
     user_id = callback.from_user.id
     user_lang_doc = user_lang_collection.find_one({"user_id": user_id})
-    current_language = user_lang_doc['language'] if user_lang_doc else "en"
+    current_language = user_lang_doc['language'] if user_lang_doc else "ru"
     if not user_lang_doc:
         user_lang_collection.insert_one({"user_id": user_id, "language": current_language})
     
@@ -245,7 +240,7 @@ You can change your settings from below options.
     if user_lang_doc:
         current_language = user_lang_doc['language']
     else:
-        current_language = "en"
+        current_language = "ru"
         user_lang_collection.insert_one({"user_id": user_id, "language": current_language})
     user_settings = user_voice_collection.find_one({"user_id": user_id})
     
@@ -356,7 +351,7 @@ async def change_image_count_callback(client, callback: CallbackQuery):
     try:
         chosen_count = int(callback.data.split("_")[-1])
     except (IndexError, ValueError):
-        await callback.answer("Invalid selection.", show_alert=True)
+        await callback.answer("Неверный выбор.", show_alert=True)
         return
 
     is_premium_user, _, _ = await is_user_premium(user_id)
@@ -384,7 +379,7 @@ async def change_image_count_callback(client, callback: CallbackQuery):
 async def send_settings_menu_as_message(client_obj, message):
     user_id = message.from_user.id
     user_lang_doc = user_lang_collection.find_one({"user_id": user_id})
-    current_language = user_lang_doc['language'] if user_lang_doc else "en"
+    current_language = user_lang_doc['language'] if user_lang_doc else "ru"
     if not user_lang_doc:
         user_lang_collection.insert_one({"user_id": user_id, "language": current_language})
     user_settings = user_voice_collection.find_one({"user_id": user_id})

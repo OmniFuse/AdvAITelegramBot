@@ -228,7 +228,7 @@ async def handle_user_management(client: Client, callback: CallbackQuery, page: 
     
     # Check if user is admin
     if user_id not in ADMINS:
-        await callback.answer("You don't have permission to access user management", show_alert=True)
+        await callback.answer("У вас нет прав для доступа к управлению пользователями", show_alert=True)
         return
     
     # Show loading message

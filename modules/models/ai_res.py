@@ -360,7 +360,7 @@ async def aires(client: Client, message: Message) -> None:
 
     except Exception as e:
         print(f"Error in aires function: {e}")
-        await message.reply_text("I'm experiencing technical difficulties. Please try again in a moment.")
+        await message.reply_text("Возникли технические проблемы. Пожалуйста, попробуйте позже.")
 
 async def new_chat(client: Client, message: Message) -> None:
     """
@@ -386,7 +386,7 @@ async def new_chat(client: Client, message: Message) -> None:
         })
 
         # Send confirmation message with modern UI
-        await message.reply_text("🔄 **Conversation Reset**\n\nYour chat history has been cleared. Ready for a fresh conversation!")
+        await message.reply_text("🔄 **История чата очищена**\n\nВы можете начать новый диалог!")
 
     except Exception as e:
         await message.reply_text(f"Error clearing chat history: {e}")
