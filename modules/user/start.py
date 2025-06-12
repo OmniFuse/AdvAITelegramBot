@@ -14,18 +14,18 @@ from modules.user.ai_model import TEXT_MODELS, IMAGE_MODELS
 # Import for benefits display
 # Define button texts with emojis - NO premium button here
 button_list = [
-    "➕ Add to Group",
-    "🛠️ Commands",
-    "❓ Help",
-    "⚙️ Settings",
-    "📞 Support",
+    "➕ Добавить в группу",
+    "🛠️ Команды",
+    "❓ Помощь",
+    "⚙️ Настройки",
+    "📞 Поддержка",
     "💎 Получить премиум"
 ]
 
 welcome_text = """
 ✨ **Добро пожаловать, {user_mention}!** ✨
 
-🤖 **Продвинутый AI Бот**
+🤖 **ChatAll**
 
 Я могу помочь вам с:
 
@@ -44,8 +44,6 @@ welcome_text = """
 """ + ", ".join(IMAGE_MODELS.values()) + """
 
 <b>✨ Поддержка нескольких моделей:</b> Вы можете выбрать предпочитаемые текстовые и графические модели в Настройках → Панель моделей ИИ.
-
-👨‍💻 **Разработчик — [Chandan Singh](https://techycsr.me)**(**@techycsr**)
 
 **Выберите кнопку ниже, чтобы начать!**
 """
@@ -109,7 +107,7 @@ async def premium_info_page(client_or_bot, update_obj: Union[Message, CallbackQu
     user_id = update_obj.from_user.id
     benefits_text = await get_premium_benefits_message(user_id)
     btn_get_sub_text = await async_translate_to_lang("💳 Получить подписку", user_id)
-    btn_back_text = await async_translate_to_lang("🔙 Back to Start", user_id)
+    btn_back_text = await async_translate_to_lang("🔙 Назад", user_id)
 
     keyboard_buttons = [
         [InlineKeyboardButton(btn_get_sub_text, callback_data="premium_plans")],

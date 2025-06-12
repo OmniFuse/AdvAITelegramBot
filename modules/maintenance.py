@@ -142,7 +142,7 @@ async def maintenance_message(user_id: int) -> str:
         Translated maintenance message
     """
     maintenance_text = """
-🚧 **Bot Maintenance in Progress** 🚧
+🚧 **Бот находится на обсуживании** 🚧
 
 Our bot is currently undergoing maintenance to improve its performance and features.
 We apologize for any inconvenience and appreciate your patience.
@@ -150,8 +150,7 @@ We apologize for any inconvenience and appreciate your patience.
 The system will be back online as soon as possible.
 
 For urgent inquiries, please contact:
-• Developer: @techycsr
-• Website: techycsr.me
+• Developer: @artemevkhv
 """
     return await async_translate_to_lang(maintenance_text, user_id)
 
@@ -464,15 +463,6 @@ async def handle_donation(client, callback: CallbackQuery):
 💰 **Support Bot Development**
 
 Your donations help maintain and improve this bot with new features and better performance.
-
-Developed by Chandan Singh (@techycsr), a tech enthusiast and student developer passionate about AI/ML and Telegram bots.
-
-**UPI Payment Option:**
-• UPI ID: `csr.info.in@oksbi`
-• Scan QR code or use any UPI app like Google Pay, PhonePe, Paytm, etc.
-
-**After donating:**
-Please message @techycsr with your donation details to get premium features activated.
 
 Thank you for your support! 🙏
 """

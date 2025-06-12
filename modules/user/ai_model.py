@@ -8,8 +8,8 @@ from typing import Tuple
 import asyncio
 
 # --- Constants ---
-TEXT_MODEL_HEADING = "AI Text Generation Model"
-IMAGE_MODEL_HEADING = "Image Generation Model"
+TEXT_MODEL_HEADING = "Текстовые модели LLM"
+IMAGE_MODEL_HEADING = "Модели генерации изображений"
 
 TEXT_MODELS = {
     "gpt-4o": "GPT-4o",
@@ -92,12 +92,12 @@ async def ai_model_settings_panel(client_obj, callback: CallbackQuery):
     current_text_model, current_image_model = await get_user_ai_models(user_id)
 
     # --- Translations ---
-    panel_title_text = await async_translate_to_lang("🧠 AI Model Settings", current_lang)
+    panel_title_text = await async_translate_to_lang("🧠 Настройки AI модели", current_lang)
     
     text_model_heading_display = await async_translate_to_lang(TEXT_MODEL_HEADING, current_lang)
     image_model_heading_display = await async_translate_to_lang(IMAGE_MODEL_HEADING, current_lang)
     
-    back_button_text = await async_translate_to_lang("🔙 Back to Settings", current_lang)
+    back_button_text = await async_translate_to_lang("🔙 Назад в настройки", current_lang)
     
     # Translate model display names
     translated_text_models = {k: await async_translate_to_lang(v, current_lang) for k, v in TEXT_MODELS.items()}
@@ -141,12 +141,12 @@ async def ai_model_settings_panel(client_obj, callback: CallbackQuery):
     current_text_model_label = translated_text_models.get(current_text_model, current_text_model)
     current_image_model_label = translated_image_models.get(current_image_model, current_image_model)
     current_models_text = f"👤 {user_mention}\n" \
-                        f"Current Text Model: <b>{current_text_model_label}</b>\n" \
-                        f"Current Image Model: <b>{current_image_model_label}</b>\n\n"
+                        f"Текущая модель LLM: <b>{current_text_model_label}</b>\n" \
+                        f"Текущая модель Text2Img: <b>{current_image_model_label}</b>\n\n"
 
     panel_text = current_models_text
     panel_text += f"<b>{panel_title_text}</b>\n\n"
-    panel_text += await async_translate_to_lang("Please select your preferred AI models for text and image generation.", current_lang)
+    panel_text += await async_translate_to_lang("Выберите предпочитаемые модели для генераций.", current_lang)
 
     await callback.message.edit_text(
         text=panel_text,
@@ -165,15 +165,15 @@ async def handle_set_text_model(client_obj, callback: CallbackQuery):
     is_premium, _, _ = await is_user_premium(user_id)
     is_admin = user_id in ADMINS
     if model_key == current_text_model:
-        alert_text = await async_translate_to_lang("This is already your selected text model.", current_lang)
+        alert_text = await async_translate_to_lang("Вы уже выбрали эту модель.", current_lang)
         await callback.answer(alert_text, show_alert=True)
     elif (model_key in RESTRICTED_TEXT_MODELS) and (not is_premium and not is_admin):
-        alert_text = await async_translate_to_lang("You need to upgrade to Premium to use this model.", current_lang)
+        alert_text = await async_translate_to_lang("Вам нужен премиум статус для этой модели.", current_lang)
         await callback.answer(alert_text, show_alert=True)
     else:
         await set_user_ai_model(user_id, "text", model_key)
         await ai_model_settings_panel(client_obj, callback)
-        alert_text_template = await async_translate_to_lang("Text model set to: {model_name}", current_lang)
+        alert_text_template = await async_translate_to_lang("Модель LLM установлена на: {model_name}", current_lang)
         model_display_name = await async_translate_to_lang(TEXT_MODELS.get(model_key, model_key), current_lang)
         await callback.answer(alert_text_template.format(model_name=model_display_name), show_alert=False)
 
@@ -186,15 +186,15 @@ async def handle_set_image_model(client_obj, callback: CallbackQuery):
     is_premium, _, _ = await is_user_premium(user_id)
     is_admin = user_id in ADMINS
     if model_key == current_image_model:
-        alert_text = await async_translate_to_lang("This is already your selected image model.", current_lang)
+        alert_text = await async_translate_to_lang("Вы уже выбрали эту модель.", current_lang)
         await callback.answer(alert_text, show_alert=True)
     elif (model_key in RESTRICTED_IMAGE_MODELS) and (not is_premium and not is_admin):
-        alert_text = await async_translate_to_lang("You need to upgrade to Premium to use this model.", current_lang)
+        alert_text = await async_translate_to_lang("Вам нужен премиум статус для этой модели.", current_lang)
         await callback.answer(alert_text, show_alert=True)
     else:
         await set_user_ai_model(user_id, "image", model_key)
         await ai_model_settings_panel(client_obj, callback)
-        alert_text_template = await async_translate_to_lang("Image model set to: {model_name}", current_lang)
+        alert_text_template = await async_translate_to_lang("Модель Text2Img установлена на: {model_name}", current_lang)
         model_display_name = await async_translate_to_lang(IMAGE_MODELS.get(model_key, model_key), current_lang)
         await callback.answer(alert_text_template.format(model_name=model_display_name), show_alert=False)
 
@@ -206,11 +206,11 @@ async def handle_ai_model_heading_click(client_obj, callback: CallbackQuery):
     heading_type = callback.data.split("_")[-1] # "text" or "image"
     
     if heading_type == "text":
-        alert_text = await async_translate_to_lang("Choose the AI Text Generation Model from the options below.", current_lang)
+        alert_text = await async_translate_to_lang("Выберите модель для генерации текста из вариантов ниже.", current_lang)
     elif heading_type == "image":
-        alert_text = await async_translate_to_lang("Choose the Image Generation Model from the options below.", current_lang)
+        alert_text = await async_translate_to_lang("Выберите модель для генерации изображений из вариантов ниже.", current_lang)
     else:
-        alert_text = await async_translate_to_lang("Invalid selection.", current_lang) # Should not happen
+        alert_text = await async_translate_to_lang("Неверный выбор.", current_lang) # Should not happen
         
     await callback.answer(alert_text, show_alert=True)
 

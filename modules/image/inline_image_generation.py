@@ -198,7 +198,7 @@ def get_image_caption(prompt: str) -> str:
     Returns:
         Formatted caption with prompt and bot username
     """
-    return f"🖼️ **AI Generated Image**\n\n📝 **Prompt**: `{prompt}`\n\n@AdvChatGptBot"
+    return f"🖼️ **Изображение ИИ**\n\n📝 **Промпт**: `{prompt}`\n\n@ChatAllTelegramBot"
 
 def get_cached_image(user_id: int, prompt: str = None) -> Optional[str]:
     """Get a cached image file_id for a user

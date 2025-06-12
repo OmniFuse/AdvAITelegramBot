@@ -9,146 +9,143 @@ from modules.chatlogs import channel_log
 
 
 help_text = """
-✨ **ADVANCED ChatGPT BOT - HELP CENTER** ✨
+✨ **ЦЕНТР ПОМОЩИ ChatAll** ✨
 
 ━━━━━━━━━━━━━━━━━━━
 
-This intelligent bot was created by **Chandan Singh** (@techycsr) 
-to bring powerful ChatGPT features directly to your Telegram chats.
-
-**SELECT A CATEGORY BELOW:**
+**ВЫБЕРИТЕ КАТЕГОРИЮ НИЖЕ:**
 """
 
 ai_chat_help = """
-🧠 **AI CHAT ASSISTANT** 🧠
+🧠 **ПОМОЩНИК AI-ЧАТА** 🧠
 
 ━━━━━━━━━━━━━━━━━━━
 
-The bot uses **GPT-4o** to provide intelligent responses to any question.
+Бот использует **GPT-4o** для умных ответов на любые вопросы.
 
-**KEY FEATURES:**
-• 💬 **Context-aware** - Remembers conversation history
-• 🧩 **Complex questions** - Detailed, thoughtful answers
-• 💻 **Code generation** - With syntax highlighting
-• 🔢 **Math solver** - Works with equations & problems
-• 🌎 **Translation** - Works in multiple languages
+**ОСНОВНЫЕ ВОЗМОЖНОСТИ:**
+• 💬 **Учитывает контекст** — помнит историю беседы
+• 🧩 **Сложные вопросы** — развёрнутые ответы
+• 💻 **Генерация кода** — с подсветкой синтаксиса
+• 🔢 **Решение задач** — помогает с уравнениями
+• 🌎 **Перевод** — работает на разных языках
 
-**COMMANDS:**
-• 💬 In private chats: Just type your message
-• 🔄 In groups: Use `/ai`, `/ask`, or `/say` + question
-• 🆕 Reset chat: Use `/new` or `/newchat`
+**КОМАНДЫ:**
+• 💬 В личных чатах: просто напишите сообщение
+• 🔄 В группах: используйте `/ai`, `/ask` или `/say` + вопрос
+• 🆕 Сбросить чат: `/new` или `/newchat`
 
-**EXAMPLE:** 
-`/ai What makes quantum computing different from classical computing?`
+**ПРИМЕР:**
+`/ai чем квантовые вычисления отличаются от классических?`
 
-**💡 PRO TIP:** For code questions, mention the programming language for better formatting.
+**💡 СОВЕТ:** для вопросов по коду указывайте язык программирования.
 """
 
 image_gen_help = """
-🖼️ **IMAGE GENERATION** 🖼️
+🖼️ **ГЕНЕРАЦИЯ ИЗОБРАЖЕНИЙ** 🖼️
 
 ━━━━━━━━━━━━━━━━━━━
 
-Create stunning images from text descriptions using advanced AI.
+Создавайте впечатляющие изображения по текстовому описанию.
 
-**KEY FEATURES:**
-• 🎨 **High-quality images** - Detailed & realistic
-• 🏞️ **Multiple styles** - Realistic, Artistic, Sketch, 3D
-• 🔄 **Regeneration** - One-click retry with same prompt
-• 👥 **Works everywhere** - Private chats & groups
+**ОСНОВНЫЕ ВОЗМОЖНОСТИ:**
+• 🎨 **Высокое качество** — детализированные и реалистичные картинки
+• 🏞️ **Разные стили** — реализм, арт, скетч, 3D
+• 🔄 **Перегенерация** — повтор с тем же запросом одной кнопкой
+• 👥 **Работает везде** — в личных чатах и группах
 
-**COMMANDS:**
-• 📝 `/generate [prompt]` - Full command
-• 📸 `/img [prompt]` - Shorter alternative
-• 🖌️ `/gen [prompt]` - Shortest version
+**КОМАНДЫ:**
+• 📝 `/generate [запрос]` — полная команда
+• 📸 `/img [запрос]` — короткая версия
+• 🖌️ `/gen [запрос]` — самая короткая
 
-**EXAMPLE:**
-`/img a cyberpunk city at night with neon lights and flying cars`
+**ПРИМЕР:**
+`/img киберпанк-город ночью с неоном и летающими машинами`
 
-**💡 PRO TIPS:**
-• Be specific about details, lighting, and perspective
-• Include artistic references for better results
-• Try different styles for varied outputs
+**💡 СОВЕТЫ:**
+• Указывайте детали, освещение и перспективу
+• Добавляйте художественные ссылки для лучшего результата
+• Пробуйте разные стили для разнообразия
 """
 
 voice_features_help = """
-🎙️ **VOICE FEATURES** 🎙️
+🎙️ **ГОЛОСОВЫЕ ФУНКЦИИ** 🎙️
 
 ━━━━━━━━━━━━━━━━━━━
 
-Convert between voice and text with advanced speech processing.
+Преобразование речи и текста с помощью продвинутых технологий.
 
-**KEY FEATURES:**
-• 🗣️ **Voice-to-text** - Transcribe voice messages
-• 🔊 **Text-to-voice** - Listen to bot responses
-• 🌐 **Multilingual** - Works in multiple languages
-• 💬 **Conversation** - Ask questions by voice
+**ОСНОВНЫЕ ВОЗМОЖНОСТИ:**
+• 🗣️ **Речь в текст** — расшифровка голосовых сообщений
+• 🔊 **Текст в речь** — озвучивание ответов
+• 🌐 **Мультиязычность** — поддержка разных языков
+• 💬 **Диалог** — задавайте вопросы голосом
 
-**HOW TO USE:**
-1. 🎤 Send a voice message
-2. 📝 Bot converts to text & understands
-3. 💬 Bot responds to your question
-4. ⚙️ Adjust voice settings in Settings menu
+**КАК ИСПОЛЬЗОВАТЬ:**
+1. 🎤 Отправьте голосовое сообщение
+2. 📝 Бот превратит его в текст
+3. 💬 Получите ответ на вопрос
+4. ⚙️ Настройте параметры голоса в меню настроек
 
-**💡 PRO TIPS:**
-• Speak clearly in a quiet environment
-• Keep messages under 1 minute for best results
-• Set your preferred voice language in settings
+**💡 СОВЕТЫ:**
+• Говорите чётко и без посторонних шумов
+• Держите сообщения короче 1 минуты
+• Выберите предпочтительный язык голоса в настройках
 """
 
 image_analysis_help = """
-🔍 **IMAGE ANALYSIS** 🔍
+🔍 **АНАЛИЗ ИЗОБРАЖЕНИЙ** 🔍
 
 ━━━━━━━━━━━━━━━━━━━
 
-Extract and analyze text from any image with smart OCR technology.
+Извлекайте и анализируйте текст с любых изображений с помощью OCR.
 
-**KEY FEATURES:**
-• 📱 **Text extraction** - From photos & screenshots
-• 📄 **Document scanning** - Read printed documents
-• ❓ **Follow-up questions** - Ask about extracted text
-• 📊 **Data recognition** - Tables, receipts & more
+**ОСНОВНЫЕ ВОЗМОЖНОСТИ:**
+• 📱 **Распознавание текста** — фото и скриншоты
+• 📄 **Сканирование документов** — печатные материалы
+• ❓ **Дополнительные вопросы** — спрашивайте о найденном тексте
+• 📊 **Распознавание данных** — таблицы, чеки и другое
 
-**HOW TO USE:**
-1. 📷 Send any image with text
-2. 🔍 Bot extracts all readable text
-3. 💬 Ask follow-up questions about the content
-4. 📱 In groups, add "ai" in image caption
+**КАК ИСПОЛЬЗОВАТЬ:**
+1. 📷 Отправьте изображение с текстом
+2. 🔍 Бот извлечёт весь читаемый текст
+3. 💬 Задайте вопросы по содержимому
+4. 📱 В группах добавьте "ai" в подпись к изображению
 
-**💡 PRO TIPS:**
-• Use good lighting for clearer results
-• Capture text straight-on, not at angles
-• Crop to focus on the important text
+**💡 СОВЕТЫ:**
+• Используйте хорошее освещение для лучшего распознавания
+• Фотографируйте текст прямо, без наклонов
+• Обрезайте фото, оставляя важную область
 """
 
 quick_start_help = """
-🚀 **QUICK START GUIDE** 🚀
+🚀 **КРАТКОЕ РУКОВОДСТВО** 🚀
 
 ━━━━━━━━━━━━━━━━━━━
 
-**GET STARTED IN 3 STEPS:**
+**ВСЕГО 3 ШАГА:**
 
-1️⃣ **Chat with AI**
-   • Private: Just type any message
-   • Groups: Use `/ai` command
+1️⃣ **Общение с ИИ**
+   • В личке: просто отправьте сообщение
+   • В группах: используйте команду `/ai`
 
-2️⃣ **Generate Images**
-   • Use `/img` followed by description
-   • Example: `/img sunset over mountains`
+2️⃣ **Создание изображений**
+   • Введите `/img` и описание
+   • Пример: `/img закат над горами`
 
-3️⃣ **Analyze Images**
-   • Send any image with text
-   • Bot will extract and analyze
+3️⃣ **Анализ изображений**
+   • Отправьте любое изображение с текстом
+   • Бот извлечёт текст и проанализирует его
 
-**USEFUL COMMANDS:**
-• `/start` - Main menu
-• `/help` - This help center
-• `/settings` - Configure bot preferences
-• `/new` - Clear conversation history
+**ПОЛЕЗНЫЕ КОМАНДЫ:**
+• `/start` — главное меню
+• `/help` — этот справочник
+• `/settings` — настройки бота
+• `/new` — очистить историю диалога
 
-**HAVING TROUBLE?**
-• Select the Support button from main menu
-• Try more specific prompts for better results
+**ПРОБЛЕМЫ?**
+• Нажмите «Поддержка» в главном меню
+• Сформулируйте запрос точнее для лучшего результата
 """
 
 
@@ -158,12 +155,12 @@ async def help(client, message):
     # Translate help text and button labels
     texts_to_translate = [
         help_text, 
-        "🧠 AI Chat", 
-        "🖼️ Image Generation", 
-        "🎙️ Voice Features",
-        "🔍 Image Analysis",
-        "🚀 Quick Start",
-        "📋 Commands"
+        "🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт",
+        "📋 Команды"
     ]
     
     translated_texts = await batch_translate(texts_to_translate, user_id)
@@ -197,8 +194,11 @@ async def help(client, message):
 async def help_inline_start(bot, callback):
     user_id = callback.from_user.id
     texts_to_translate = [
-        help_text, "🧠 AI Chat", "🖼️ Image Generation", "🎙️ Voice Features",
-        "🔍 Image Analysis", "🚀 Quick Start", "📋 Commands", "🔙 Back"
+        help_text,"🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт","🔙 Назад"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
@@ -231,8 +231,11 @@ async def help_inline_start(bot, callback):
 async def help_inline_help(bot, callback):
     user_id = callback.from_user.id
     texts_to_translate = [
-        help_text, "🧠 AI Chat", "🖼️ Image Generation", "🎙️ Voice Features",
-        "🔍 Image Analysis", "🚀 Quick Start", "📋 Commands"
+        help_text,"🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт","🔙 Назад"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
@@ -277,7 +280,7 @@ async def handle_help_category(client, callback):
     elif 'quickstart' in callback_data:
         help_content = quick_start_help
     translated_text = await async_translate_to_lang(help_content, user_id)
-    back_btn = await translate_ui_element("🔙 Back to Help Menu", user_id)
+    back_btn = await translate_ui_element("🔙 Назад в меню помощи", user_id)
     # Use correct callback_data for back button
     back_callback = "help_start" if is_start else "help_help"
     keyboard = InlineKeyboardMarkup([

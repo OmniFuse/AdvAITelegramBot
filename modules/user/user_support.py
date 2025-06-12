@@ -6,21 +6,20 @@ from modules.maintenance import maintenance_settings, is_admin_user
 from config import ADMINS as admin_ids, OWNER_ID
 
 support_text="""
-🤖 **Advanced AI Bot Information**
+🤖 **ChatAll Information**
 
-This versatile AI assistant supports a wide range of capabilities:
+Возможности:
 
-• 🖼️ Image Generation 
-• 🎙️ Voice Interactions
-• 📝 Image-to-Text Analysis
-• 💬 Advanced Conversational AI
-• 🌐 Multi-language Support
+• 🖼️ Генерация изображений 
+• 🎙️ Голосовые взаимодействия
+• 📝 Image-to-Text Анализ
+• 💬 Продвинутый разговорный ИИ
+• 🌐 Мультиязычность
 
-**Developed by:** [Chandan Singh](https://techycsr.me)
-**Technology:** Gpt-4, Qwen-3, DeepSeek-R1, Dall-E3, Flux, Flux-Pro
-**Version:** 2.1
+**Технологии:** Gpt-4, Qwen-3, DeepSeek-R1, Dall-E3, Flux, Flux-Pro
+**Версия:** 2.1
 
-**Need assistance?** Choose an option below.
+**Нужна помощь?** Выберите опцию ниже.
 """
 
 
@@ -55,10 +54,6 @@ async def settings_support_callback(client, callback_query):
                 InlineKeyboardButton(developers_btn, callback_data="support_developers")
             ],
             [
-                InlineKeyboardButton(community_btn, url="https://t.me/AdvChatGpt"),
-                InlineKeyboardButton(source_code_btn, url="https://github.com/TechyCSR/AdvAITelegramBot")
-            ],
-            [
                 InlineKeyboardButton(system_status_btn, callback_data="settings_others")
             ],
             [
@@ -81,19 +76,6 @@ async def support_admins_callback(client, callback: CallbackQuery):
     admin_contact_info = """
 👤 **Developer & Admin Contact**
 
-**Chandan Singh** (@techycsr)
-Tech Enthusiast & Student Developer
-
-• **Portfolio:** [techycsr.me](https://techycsr.me)
-• **GitHub:** [TechyCSR](https://github.com/TechyCSR)
-• **Email:** csr.info.in@gmail.com
-
-**About Me:**
-I'm a tech enthusiast with a strong passion for Python, AI/ML, and open-source development. I specialize in building Telegram bots using Pyrogram and MongoDB, developing AI-powered applications, and managing web development projects.
-
-**Support Channels:**
-• Community: @AdvChatGpt
-• Issues: [GitHub Repository](https://github.com/TechyCSR/AdvAITelegramBot/issues)
 
 Feel free to reach out for assistance, feature requests, or to report issues.
     """
@@ -106,10 +88,6 @@ Feel free to reach out for assistance, feature requests, or to report issues.
     
     keyboard = InlineKeyboardMarkup(
         [
-            [
-                InlineKeyboardButton(contact_btn, url="https://t.me/techycsr"),
-                InlineKeyboardButton(website_btn, url="https://techycsr.me")
-            ],
             [
                 InlineKeyboardButton(back_btn, callback_data="support")
             ]

@@ -25,14 +25,14 @@ ai_mode_collection = db['ai_mode']
 user_image_gen_settings_collection = db['user_image_gen_settings']
 
 modes = {
-    "chatbot": "Chatbot",
-    "coder": "Coder/Developer",
-    "professional": "Professional",
-    "teacher": "Teacher",
-    "therapist": "Therapist",
-    "assistant": "Personal Assistant",
-    "gamer": "Gamer",
-    "translator": "Translator"
+    "chatbot": "Чат-Бот",
+    "coder": "Разработчик",
+    "professional": "Профессионал",
+    "teacher": "Учитель",
+    "therapist": "Терапевт",
+    "assistant": "Ассистент",
+    "gamer": "Геймер",
+    "translator": "Переводчик"
 }
 
 languages = {
@@ -40,19 +40,19 @@ languages = {
 }
 
 settings_text_template = """
-**Setting Menu for User {mention}**
+**Настройки для {mention}**
 
 **User ID**: {user_id}
-**Account Status**: {premium_status}
-**User Language:** {language}
-**User Voice**: {voice_setting}
-**User Mode**: {mode}
-**AI Text Model**: {ai_text_model}
-**AI Image Model**: {ai_image_model}
+**Статус**: {premium_status}
+**Язык:** {language}
+**Голос**: {voice_setting}
+**Режим**: {mode}
+**AI Текстовая модель**: {ai_text_model}
+**AI Генеративная модель**: {ai_image_model}
 
-You can change your settings from below options.
+Вы можете изменить настройки ниже.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 async def settings_inline(client_obj, callback: CallbackQuery):
@@ -75,10 +75,10 @@ async def settings_inline(client_obj, callback: CallbackQuery):
     # Get premium status
     is_premium, remaining_days, _ = await is_user_premium(user_id)
     if is_premium:
-        premium_status_text_key = "✨ Premium User ({days} days left)"
+        premium_status_text_key = "✨ Премиум ({days} дней осталось)"
         premium_status_val = await async_translate_to_lang(premium_status_text_key.format(days=remaining_days), current_language)
     else:
-        premium_status_text_key = "👤 Standard User"
+        premium_status_text_key = "👤 Обычный"
         premium_status_val = await async_translate_to_lang(premium_status_text_key, current_language)
     
     current_mode_label = await async_translate_to_lang(modes.get(current_mode, current_mode), current_language)
@@ -100,11 +100,11 @@ async def settings_inline(client_obj, callback: CallbackQuery):
         ai_image_model=ai_image_model,
     )
 
-    button_labels = ["🌐 Language", "🎙️ Voice", "🤖 Assistant", "🖼️ Image Count", "🔙 Back"]
+    button_labels = ["🌐 Язык", "🎙️ Голос", "🤖 Ассистент", "🖼️ Изображения", "🔙 Назад"]
     translated_labels = await batch_translate(button_labels, user_id)
     
     # Add the new AI Models button
-    ai_models_button_label = await async_translate_to_lang("🧠 AI Models", current_language)
+    ai_models_button_label = await async_translate_to_lang("🧠 Модели ИИ", current_language)
 
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(ai_models_button_label, callback_data="settings_ai_models")],  # New button
@@ -232,7 +232,7 @@ async def settings_voice_inlines(client, callback):
 
 You can change your settings from below options.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
     user_id = callback.from_user.id
@@ -313,12 +313,12 @@ async def settings_image_count_callback(client, callback: CallbackQuery):
     is_premium_user, _, _ = await is_user_premium(user_id)
     is_admin_user = user_id in ADMINS
 
-    title_text = await async_translate_to_lang("🖼️ Image Generation Count", current_lang)
-    desc_text_template = await async_translate_to_lang("Select how many images you want to generate at once. Current: {count}", current_lang)
+    title_text = await async_translate_to_lang("🖼️ Генерации", current_lang)
+    desc_text_template = await async_translate_to_lang("Сколько изображений за раз генерировать, сейчас: {count}", current_lang)
     desc_text = desc_text_template.format(count=current_count)
-    premium_needed_alert = await async_translate_to_lang("Standard users can only generate 1 image. Upgrade to Premium for more!", current_lang)
+    premium_needed_alert = await async_translate_to_lang("Обычные пользователи могут генерировать только 1 за раз. Получите премиум для большего числа!", current_lang)
     back_button_text = await async_translate_to_lang("🔙 Back", current_lang)
-    time_warning_text = await async_translate_to_lang("⚠️ Generating 3 or 4 images will take significantly longer.", current_lang)
+    time_warning_text = await async_translate_to_lang("⚠️ Генерация 3х или 4х изображений займет продолжительное время.", current_lang)
 
     buttons = []
     for i in range(1, 5): # 1, 2, 3, 4
@@ -358,7 +358,7 @@ async def change_image_count_callback(client, callback: CallbackQuery):
     is_admin_user = user_id in ADMINS
 
     if not is_premium_user and not is_admin_user and chosen_count > 1:
-        premium_needed_alert = await async_translate_to_lang("Standard users can only generate 1 image. Upgrade to Premium for more!", current_lang)
+        premium_needed_alert = await async_translate_to_lang("Обычные пользователи могут генерировать только 1 за раз. Получите премиум для большего числа!", current_lang)
         await callback.answer(premium_needed_alert, show_alert=True)
         # Don't change setting, just re-display the panel (or do nothing to keep them on the same panel)
         # Calling settings_image_count_callback again will refresh it.
@@ -371,7 +371,7 @@ async def change_image_count_callback(client, callback: CallbackQuery):
         upsert=True
     )
     
-    update_success_alert_template = await async_translate_to_lang("Image count set to {count}!", current_lang)
+    update_success_alert_template = await async_translate_to_lang("Установлено на {count}!", current_lang)
     await callback.answer(update_success_alert_template.format(count=chosen_count), show_alert=False)
     # Refresh the panel to show the new selection
     await settings_image_count_callback(client, callback)
@@ -392,10 +392,10 @@ async def send_settings_menu_as_message(client_obj, message):
         ai_mode_collection.insert_one({"user_id": user_id, "mode": current_mode})
     is_premium, remaining_days, _ = await is_user_premium(user_id)
     if is_premium:
-        premium_status_text_key = "✨ Premium User ({days} days left)"
+        premium_status_text_key = "✨ Премиум ({days} дней осталось)"
         premium_status_val = await async_translate_to_lang(premium_status_text_key.format(days=remaining_days), current_language)
     else:
-        premium_status_text_key = "👤 Standard User"
+        premium_status_text_key = "👤 Обычный"
         premium_status_val = await async_translate_to_lang(premium_status_text_key, current_language)
     current_mode_label = await async_translate_to_lang(modes.get(current_mode, current_mode), current_language)
     current_language_label = await async_translate_to_lang(languages.get(current_language, current_language), current_language)
@@ -412,9 +412,9 @@ async def send_settings_menu_as_message(client_obj, message):
         ai_text_model=ai_text_model,
         ai_image_model=ai_image_model,
     )
-    button_labels = ["🌐 Language", "🎙️ Voice", "🤖 Assistant", "🖼️ Image Count", "🔙 Back"]
+    button_labels = ["🌐 Язык", "🎙️ Войсы", "🤖 Ассистент", "🖼️ Число изображений", "🔙 Назад"]
     translated_labels = await batch_translate(button_labels, user_id)
-    ai_models_button_label = await async_translate_to_lang("🧠 AI Models", current_language)
+    ai_models_button_label = await async_translate_to_lang("🧠 ИИ Модели", current_language)
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(ai_models_button_label, callback_data="settings_ai_models")],
         [InlineKeyboardButton(translated_labels[0], callback_data="settings_lans"),

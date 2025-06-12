@@ -14,14 +14,14 @@ user_voice_collection = db["user_voice_setting"]
 ai_mode_collection = db['ai_mode']
 
 modes = {
-    "chatbot": "Chatbot",
-    "coder": "Coder/Developer",
-    "professional": "Professional",
-    "teacher": "Teacher",
-    "therapist": "Therapist",
-    "assistant": "Personal Assistant",
-    "gamer": "Gamer",
-    "translator": "Translator"
+    "chatbot": "Чат-Бот",
+    "coder": "Разработчик",
+    "professional": "Профессионал",
+    "teacher": "Учитель",
+    "therapist": "Терапевт",
+    "assistant": "Ассистент",
+    "gamer": "Геймер",
+    "translator": "Переводчик"
 }
 
 languages = {

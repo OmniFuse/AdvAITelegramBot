@@ -10,94 +10,94 @@ from config import ADMINS
 
 
 command__text = """
-**🤖 Bot Commands 🤖**
+**🤖 Команды бота 🤖**
 
-Select a feature below to see detailed commands and examples.
+Выберите функцию ниже, чтобы увидеть подробные команды и примеры.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 ai_commands_text = """
-**🧠 AI Chat Commands**
+**🧠 Команды AI-чата**
 
-**In Private Chats:**
-- Simply type your message and I'll respond
-- Send a voice message to get voice-to-text conversion
-- Use `/new` or `/newchat` to start a fresh conversation
+**В личных чатах:**
+- Просто напишите сообщение, и я отвечу
+- Отправьте голосовое сообщение, чтобы получить текстовый ответ
+- Используйте `/new` или `/newchat` для начала новой беседы
 
-**In Group Chats:**
-- Use `/ai [question]` to ask me directly
-  Example: `/ai What's the weather like in Paris?`
-- Reply to my messages to continue the conversation
-- Use `/ask [question]` or `/say [question]` as alternatives
+**В группах:**
+- Используйте `/ai [вопрос]`, чтобы спросить напрямую
+  Пример: `/ai какая погода в Париже?`
+- Отвечайте на мои сообщения для продолжения диалога
+- В качестве альтернативы используйте `/ask [вопрос]` или `/say [вопрос]`
 
-**Pro Tips:**
-- I remember conversation context in private chats
-- For coding questions, include language for better formatting
-- Use `/new` to reset our conversation history
+**Полезные советы:**
+- Я помню контекст разговора в личных чатах
+- Для вопросов по программированию указывайте язык для лучшего форматирования
+- Используйте `/new` для очистки истории беседы
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 image_commands_text = """
-**🖼️ Image Generation Commands**
+**🖼️ Команды генерации изображений**
 
-**In Private Chats:**
-- Use `/generate [prompt]` or `/img [prompt]` to create images
-  Example: `/img a serene mountain landscape at sunset`
-- Choose from multiple artistic styles after entering your prompt
-- Use the regenerate button to try again with the same prompt
+**В личных чатах:**
+- Используйте `/generate [запрос]` или `/img [запрос]` для создания изображений
+  Пример: `/img спокойный горный пейзаж на закате`
+- После ввода запроса выберите художественный стиль
+- Нажмите «сгенерировать снова», чтобы повторить попытку
 
-**In Group Chats:**
-- Use the same commands as in private chats
-- Everyone can view and react to generated images
-- Only the person who requested can regenerate images
+**В группах:**
+- Используйте те же команды, что и в личных чатах
+- Все участники видят и могут реагировать на изображения
+- Перегенерировать может только отправивший запрос
 
-**Image Analysis:**
-- Send any image to extract and analyze its text
-- Add "ai" in caption with an image to analyze it in groups
+**Анализ изображений:**
+- Отправьте любое изображение для извлечения и анализа текста
+- Добавьте "ai" в подпись изображения для анализа в группах
 
-**Pro Tips:**
-- Be specific with details for better results
-- Try different styles for varied outputs
-- Include artistic references for specific aesthetics
+**Полезные советы:**
+- Чем подробнее запрос, тем лучше результат
+- Пробуйте разные стили для разнообразных результатов
+- Указывайте художественные референсы для нужной стилистики
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 main_commands_text = """
-**📋 Main Commands**
+**📋 Основные команды**
 
-**/start** - Start the bot and see the welcome message
-**/help** - Show help information
-**/settings** - Configure bot settings
-**/rate** - Rate your experience with the bot
+**/start** - запустить бота и увидеть приветствие
+**/help** - показать справку
+**/settings** - настроить бота
+**/rate** - оценить бота
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 admin_commands_text = """
-**⚙️ Admin Commands**
+**⚙️ Команды администратора бота**
 
-These commands are restricted to bot administrators only.
+Эти команды доступны только администраторам бота.
 
-**/premium <user_id|username> <days>** - Grant premium access
-**/unpremium <user_id|username>** - Revoke premium access
-**/upremium** - Get premium list
-**/ban <user_id|username> [reason]** - Ban a user from the bot
-**/unban <user_id|username>** - Unban a user
-**/history <user_id>** - View a user's chat history
-**/uinfo <user_id|username>** - Get information about a user
-**/announce <message>** - Send a message to all users (alias: /broadcast)
-**/logs** - Get the most recent bot logs
-**/stats** - View bot statistics and usage data
-**/restart** - Restart the bot (requires confirmation)
-**/gleave** - Make the bot leave the current group
-**/invite** - Generate a bot invite link (for admins)
+**/premium <user_id|username> <days>** - выдать премиум
+**/unpremium <user_id|username>** - убрать премиум
+**/upremium** - список премиум-пользователей
+**/ban <user_id|username> [reason]** - заблокировать пользователя
+**/unban <user_id|username>** - разблокировать пользователя
+**/history <user_id>** - история чата пользователя
+**/uinfo <user_id|username>** - информация о пользователе
+**/announce <message>** - сообщение всем пользователям
+**/logs** - последние логи бота
+**/stats** - статистика бота
+**/restart** - перезапустить бота
+**/gleave** - выйти из текущей группы
+**/invite** - получить ссылку приглашения
 
-**Note:** These commands are only available to authorized administrators listed in the configuration.
+**Примечание:** эти команды доступны только администраторам, указанным в конфигурации.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 
@@ -105,7 +105,7 @@ async def command_inline(client, callback):
     user_id = callback.from_user.id
     
     # Translate the command text and buttons
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     
     # Extract translated results
@@ -124,7 +124,7 @@ async def command_inline(client, callback):
     
     # Add admin button if user is an admin
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin")])
     
     # Add back button
@@ -150,7 +150,7 @@ async def handle_command_callbacks(client, callback):
     if callback_data == "cmd_ai":
         # Show AI commands
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -167,7 +167,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_img":
         # Show Image commands
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -184,7 +184,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_main":
         # Show main commands
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -201,7 +201,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_admin":
         # Show admin commands (only for admins)
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -223,7 +223,7 @@ async def handle_command_callbacks(client, callback):
 
 async def command_inline_start(client, callback):
     user_id = callback.from_user.id
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_command = translated_texts[0]
     ai_btn = translated_texts[1]
@@ -236,7 +236,7 @@ async def command_inline_start(client, callback):
         [InlineKeyboardButton(main_btn, callback_data="cmd_main_start")],
     ]
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin_start")])
     keyboard_buttons.append([InlineKeyboardButton(back_btn, callback_data="back")])
     keyboard = InlineKeyboardMarkup(keyboard_buttons)
@@ -252,7 +252,7 @@ async def command_inline_start(client, callback):
 
 async def command_inline_help(client, callback):
     user_id = callback.from_user.id
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_command = translated_texts[0]
     ai_btn = translated_texts[1]
@@ -265,7 +265,7 @@ async def command_inline_help(client, callback):
         [InlineKeyboardButton(main_btn, callback_data="cmd_main_help")],
     ]
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin_help")])
     keyboard_buttons.append([InlineKeyboardButton(back_btn, callback_data="help_help")])
     keyboard = InlineKeyboardMarkup(keyboard_buttons)
@@ -284,7 +284,7 @@ async def handle_command_callbacks_start(client, callback):
     callback_data = callback.data
     if callback_data == "cmd_ai_start":
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -297,7 +297,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_img_start":
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -310,7 +310,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_main_start":
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -323,7 +323,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_admin_start":
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands_start")]
             ])
@@ -344,7 +344,7 @@ async def handle_command_callbacks_help(client, callback):
     callback_data = callback.data
     if callback_data == "cmd_ai_help":
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -357,7 +357,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_img_help":
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -370,7 +370,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_main_help":
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -383,7 +383,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_admin_help":
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands_help")]
             ])

@@ -14,14 +14,14 @@ ai_mode_collection = db['ai_mode']
 
 # Dictionary of modes with labels
 modes = {
-    "chatbot": "Chatbot",
-    "coder": "Coder/Developer",
-    "professional": "Professional",
-    "teacher": "Teacher",
-    "therapist": "Therapist",
-    "assistant": "Personal Assistant",
-    "gamer": "Gamer",
-    "translator": "Translator"
+    "chatbot": "Чат-Бот",
+    "coder": "Разработчик",
+    "professional": "Профессионал",
+    "teacher": "Учитель",
+    "therapist": "Терапевт",
+    "assistant": "Ассистент",
+    "gamer": "Геймер",
+    "translator": "Переводчик"
 }
 
 # Function to handle settings assistant callback
@@ -44,15 +44,15 @@ async def settings_assistant_callback(client, callback):
     message_text = f"{current_mode_text} {current_mode_translated}"
 
     # Translate button labels
-    chatbot_text = await async_translate_to_lang("🤖 Chatbot", user_id)
-    coder_text = await async_translate_to_lang("💻 Coder/Developer", user_id)
-    professional_text = await async_translate_to_lang("👔 Professional", user_id)
-    teacher_text = await async_translate_to_lang("📚 Teacher", user_id)
-    therapist_text = await async_translate_to_lang("🩺 Therapist", user_id)
-    assistant_text = await async_translate_to_lang("📝 Assistant", user_id)
-    gamer_text = await async_translate_to_lang("🎮 Gamer", user_id)
-    translator_text = await async_translate_to_lang("🌐 Translator", user_id)
-    back_btn = await async_translate_to_lang("🔙 Back", user_id)
+    chatbot_text = await async_translate_to_lang("🤖 Чат-Бот", user_id)
+    coder_text = await async_translate_to_lang("💻 Разработчик", user_id)
+    professional_text = await async_translate_to_lang("👔 Профессионал", user_id)
+    teacher_text = await async_translate_to_lang("📚 Учитель", user_id)
+    therapist_text = await async_translate_to_lang("🩺 Терапевт", user_id)
+    assistant_text = await async_translate_to_lang("📝 Ассистент", user_id)
+    gamer_text = await async_translate_to_lang("🎮 Геймер", user_id)
+    translator_text = await async_translate_to_lang("🌐 Переводчик", user_id)
+    back_btn = await async_translate_to_lang("🔙 Назад", user_id)
 
     keyboard = InlineKeyboardMarkup(
         [
@@ -99,20 +99,20 @@ async def change_mode_setting(client, callback):
     current_mode_label = modes[mode]
     
     # Translate message text
-    current_mode_text = await async_translate_to_lang("Current mode:", user_id)
+    current_mode_text = await async_translate_to_lang("Текущий режим:", user_id)
     current_mode_translated = await async_translate_to_lang(current_mode_label, user_id)
     message_text = f"{current_mode_text} {current_mode_translated}"
 
     # Translate button labels
-    chatbot_text = await async_translate_to_lang("🤖 Chatbot", user_id)
-    coder_text = await async_translate_to_lang("💻 Coder/Developer", user_id)
-    professional_text = await async_translate_to_lang("👔 Professional", user_id)
-    teacher_text = await async_translate_to_lang("📚 Teacher", user_id)
-    therapist_text = await async_translate_to_lang("🩺 Therapist", user_id)
-    assistant_text = await async_translate_to_lang("📝 Assistant", user_id)
-    gamer_text = await async_translate_to_lang("🎮 Gamer", user_id)
-    translator_text = await async_translate_to_lang("🌐 Translator", user_id)
-    back_btn = await async_translate_to_lang("🔙 Back", user_id)
+    chatbot_text = await async_translate_to_lang("🤖 Чат-Бот", user_id)
+    coder_text = await async_translate_to_lang("💻 Разработчик", user_id)
+    professional_text = await async_translate_to_lang("👔 Профессионал", user_id)
+    teacher_text = await async_translate_to_lang("📚 Учитель", user_id)
+    therapist_text = await async_translate_to_lang("🩺 Терапевт", user_id)
+    assistant_text = await async_translate_to_lang("📝 Ассистент", user_id)
+    gamer_text = await async_translate_to_lang("🎮 Геймер", user_id)
+    translator_text = await async_translate_to_lang("🌐 Переводчик", user_id)
+    back_btn = await async_translate_to_lang("🔙 Назад", user_id)
 
     keyboard = InlineKeyboardMarkup(
         [

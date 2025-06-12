@@ -18,26 +18,7 @@ async def support_developers_callback(client, callback: CallbackQuery):
     
     # Get developer information
     developer_info = """
-🧑‍💻 **Meet the Developer**
-
-**Chandan Singh** (@techycsr)
-Tech Enthusiast & Student Developer
-
-• **Portfolio:** [techycsr.me](https://techycsr.me)
-• **GitHub:** [TechyCSR](https://github.com/TechyCSR)
-• **Email:** csr.info.in@gmail.com
-• **Specializations:** Python, AI/ML, Telegram Bots, Web Development
-
-**About Me:**
-I'm a tech enthusiast with a strong passion for Python, AI/ML, and open-source development. I specialize in building Telegram bots using Pyrogram and MongoDB, developing AI-powered applications, and managing web development projects.
-
-**Project Details:**
-• This advanced AI Telegram bot integrates multiple AI services
-• Built with Python, Pyrogram, and MongoDB
-• Includes image generation, voice processing, and AI chat capabilities
-
-**Support the Development:**
-Consider donating to help maintain and improve this bot.
+Антон, напиши информацию о нас
 """
     
     # Translate the developer info and buttons
@@ -51,11 +32,6 @@ Consider donating to help maintain and improve this bot.
     keyboard = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton(portfolio_btn, url="https://techycsr.me"),
-                InlineKeyboardButton(github_btn, url="https://github.com/TechyCSR/")
-            ],
-            [
-                InlineKeyboardButton(contact_btn, url="https://t.me/techycsr"),
                 InlineKeyboardButton(donate_btn, callback_data="support_donate")
             ],
             [

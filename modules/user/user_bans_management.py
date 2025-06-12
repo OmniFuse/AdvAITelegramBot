@@ -41,15 +41,15 @@ async def is_user_banned(user_id: int) -> Tuple[bool, Optional[str]]:
     user_bans_collection = db_service.get_collection('user_bans')
     ban_record = user_bans_collection.find_one({"user_id": user_id, "is_banned": True})
     if ban_record:
-        return True, ban_record.get("reason", "No reason provided.")
+        return True, ban_record.get("reason", "Нет причины.")
     return False, None
 
 async def get_banned_message(reason: str) -> str:
     """Returns the formatted message to show to a banned user."""
     return (
-        f"🚫 **You have been banned from using this bot.** 🚫\n\n"
-        f"<b>Reason:</b> {reason}\n\n"
-        f"If you believe this is a mistake, please contact an administrator: @techycsr"
+        f"🚫 **Вы забанены в боте.** 🚫\n\n"
+        f"<b>Причина:</b> {reason}\n\n"
+        f"Если считаете, что это ошибка, свяжитесь с нами: @artemevkhv"
     )
 
 async def get_user_by_id_or_username(client, identifier):

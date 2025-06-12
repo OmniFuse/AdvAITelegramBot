@@ -31,12 +31,12 @@ async def settings_langs_callback(client, callback):
     current_language_label = languages[current_language]
     
     # Translate current language text
-    current_lang_text = await async_translate_to_lang("Current language:", user_id)
+    current_lang_text = await async_translate_to_lang("Язык:", user_id)
     message_text = f"{current_lang_text} {current_language_label}"
 
     # No need to translate language names as they're always displayed in their native form
     # But translate the Back button
-    back_btn = await async_translate_to_lang("🔙 Back", user_id)
+    back_btn = await async_translate_to_lang("🔙 Назад", user_id)
 
     keyboard = InlineKeyboardMarkup(
         [
