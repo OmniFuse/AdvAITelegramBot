@@ -56,7 +56,7 @@ def get_user_language(user_id):
     user_lang_doc = user_lang_collection.find_one({"user_id": user_id})
     if user_lang_doc:
         return user_lang_doc['language']
-    return 'en'  # Default to English if not set
+    return 'ru'  # Default to Russian if not set
 
 def get_target_language_code(lang):
     """Convert our language code to deep_translator format if needed"""
