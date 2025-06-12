@@ -9,7 +9,7 @@ from modules.chatlogs import user_log
 import re
 
 
-async def handle_text_message(client, message, text, language='en', voice_speed=False):    
+async def handle_text_message(client, message, text, language='ru', voice_speed=False):
     """
     Convert text to voice with enhanced quality and human-like tone.
     - Removes special symbols, markdown, and emojis for natural speech.
@@ -49,7 +49,7 @@ async def handle_text_message(client, message, text, language='en', voice_speed=
 
 
 # More expressive voice synthesis with custom voice markers
-async def generate_expressive_voice(client, message, text, style="neutral", language='en'):
+async def generate_expressive_voice(client, message, text, style="neutral", language='ru'):
     """
     Generate more expressive voice based on text content and style
     

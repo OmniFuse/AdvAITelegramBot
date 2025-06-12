@@ -25,26 +25,26 @@ async def leave_group(client: Client, message):
     
     try:
         await client.leave_chat(group_id)
-        await message.reply("Left the group successfully.")
+        await message.reply("Группа успешно покинута.")
         await client.send_message(STCLOG, f"#Leave\n Admin-SudoUsers {chat_id} \nReason- Admin Knows\nTask - @{bot_username} left the group {group_id}.")
     except pyrogram.errors.FloodWait as e:
-        await message.reply(f"Failed to leave the group. Please try again later. Error: {e}")
+        await message.reply(f"Не удалось покинуть группу. Попробуйте позже. Ошибка: {e}")
     except pyrogram.errors.exceptions.ChatAdminRequired as e:
-        await message.reply(f"I don't have the necessary permissions to leave the group. Please make sure I have the permission to leave. Error: {e}")
+        await message.reply(f"У меня нет прав покинуть группу. Проверьте мои разрешения. Ошибка: {e}")
     except Exception as e:
-        await message.reply(f"Failed to leave the group. Error: {e}")
+        await message.reply(f"Не удалось покинуть группу. Ошибка: {e}")
 
 async def invite_command(client, message):
     if len(message.command) != 2:
-        await message.reply("Invalid command! Please provide a group ID.")
+        await message.reply("Неверная команда! Укажите ID группы.")
         return
     chat_id = message.text.split(" ")[1]
 
     try:
         chat_invite_link = await client.export_chat_invite_link(int(chat_id))
-        await message.reply_text(f"Invite link for group {chat_id}:\n{chat_invite_link}")
+        await message.reply_text(f"Ссылка-приглашение в группу {chat_id}:\n{chat_invite_link}")
     except Exception as e:
-        await message.reply_text(f"Failed to get invite link for group {chat_id}.\nError: {e}")
+        await message.reply_text(f"Не удалось получить ссылку-приглашение для группы {chat_id}.\nОшибка: {e}")
 
 async def leave_group(client: Client, message: Message) -> None:
     """
@@ -66,7 +66,7 @@ async def leave_group(client: Client, message: Message) -> None:
     # Check if the message is in a group
     if message.chat.type not in [ChatType.GROUP, ChatType.SUPERGROUP]:
         print(message.chat.type)    
-        await message.reply_text("This command can only be used in groups.")
+        await message.reply_text("Эта команда доступна только в группах.")
         return
     
     
@@ -95,7 +95,7 @@ async def leave_group(client: Client, message: Message) -> None:
         except Exception as e:
             logger.error(f"Error leaving group: {e}")
     else:
-        await message.reply_text("Only admins can use this command.")
+        await message.reply_text("Только администраторы могут использовать эту команду.")
 
 async def invite_command(client: Client, message: Message) -> None:
     """
@@ -144,18 +144,18 @@ async def invite_command(client: Client, message: Message) -> None:
                         f"Created by: [You](tg://user?id={user_id})"
                     )
                 except Exception as e:
-                    await message.reply_text(f"Error getting invite link: {str(e)}")
+                    await message.reply_text(f"Ошибка при получении ссылки-приглашения: {str(e)}")
                     logger.error(f"Error getting invite link: {e}")
             else:
                 await message.reply_text(
-                    "Please specify a chat ID or username.\n\n"
-                    "Usage: `/invite @chatusername` or `/invite -1001234567890`"
+                    "Укажите ID или имя пользователя группы.\n\n"
+                    "Пример: `/invite @chatusername` или `/invite -1001234567890`"
                 )
         except Exception as e:
-            await message.reply_text(f"Error processing command: {str(e)}")
+            await message.reply_text(f"Ошибка при обработке команды: {str(e)}")
             logger.error(f"Error in invite command: {e}")
     else:
-        await message.reply_text("Only admins can use this command.")
+        await message.reply_text("Только администраторы могут использовать эту команду.")
 
 async def is_group_admin(client: Client, chat_id: int, user_id: int) -> bool:
     """
