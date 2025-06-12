@@ -70,7 +70,7 @@ def create_bot_instance(bot_token, bot_index=1):
     if not os.path.exists(session_dir):
         os.makedirs(session_dir)
     advAiBot = pyrogram.Client(
-        f"AdvChatGptBotV2_{bot_index}",
+        f"ChatAllV2_{bot_index}",
         bot_token=bot_token,
         api_id=config.API_KEY,
         api_hash=config.API_HASH,
@@ -1189,7 +1189,7 @@ def create_bot_instance(bot_token, bot_index=1):
         
         # Add a button to contact admin or view donation options
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("💰 Donate / Upgrade to Premium", url="https://t.me/techycsr")]
+            [InlineKeyboardButton("💰 Donate / Upgrade to Premium", url="https://t.me/artemevkhv")]
           
         ])
         

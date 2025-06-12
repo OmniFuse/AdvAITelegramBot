@@ -184,7 +184,7 @@ async def handle_permissions_help(client: Client, callback_query):
 
 1️⃣ Open your group settings
 2️⃣ Go to "Administrators"
-3️⃣ Tap on my name (@AdvChatGptBot)
+3️⃣ Tap on my name (@ChatAllTelegramBot)
 4️⃣ Enable these permissions:
    • Delete Messages
    • Invite Users via Link

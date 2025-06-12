@@ -46,7 +46,7 @@ group_command_text = """
 
 Выберите функцию ниже, чтобы увидеть подробные команды и примеры для групп.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 group_ai_commands_text = """
@@ -68,7 +68,7 @@ group_ai_commands_text = """
 - Длинные ответы разбиваю на несколько сообщений
 - Админы могут настроить стиль ответов в настройках
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 group_image_commands_text = """
@@ -90,9 +90,10 @@ group_image_commands_text = """
 - Доступны фильтры для подходящего контента
 - Могут действовать дневные лимиты против спама
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
+group_main_commands_text = """
 **📋 Основные команды группы**
 
 **/start** - получить приветствие
@@ -105,9 +106,9 @@ group_image_commands_text = """
 - `/warn` - вынести предупреждение
 - Настройки группы доступны только администраторам
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
-
+group_admin_commands_text = """
 **⚙️ Команды администратора бота**
 
 Эти команды доступны только администраторам бота.
@@ -119,7 +120,7 @@ group_image_commands_text = """
 
 **Примечание:** команды доступны только администраторам, указанным в конфигурации.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 async def group_start(client, message):
@@ -239,8 +240,8 @@ group_commands_text = """
 **Need more help?** Use the Support button below.
 """
 
+group_features_text = """
 ## ⚡ **Расширенные возможности** в группах
-
 
 **Умные взаимодействия:**
 • Поддержка разных языков
@@ -258,8 +259,9 @@ group_commands_text = """
 • Автомодерация (для админов)
 • Индивидуальный стиль ответов
 • Сохранение FAQ для быстрого доступа
-about_bot_text = """
+"""
 
+about_bot_text = """
 **Создан на базе передовых технологий:**
 • GPT-4o для умных ответов
 • DALL·E 3 для генерации изображений
@@ -274,9 +276,7 @@ about_bot_text = """
 • Одновременная работа с несколькими беседами
 • Регулярные обновления с новыми функциями
 """
-**Разработчик — [Chandan Singh](https://techycsr.me)** (@techycsr)
 group_settings_text = """
-
 ## ⚙️ **Настройки группы**
 • Выбор языка ответов
 
@@ -291,9 +291,8 @@ group_settings_text = """
 • Запланированные действия
 • Отчёты активности
 """
-**Примечание:** менять эти параметры могут только администраторы группы.
 group_support_text = """
-🤖 **Информация о боте Advanced AI**
+🤖 **Информация о боте ChatAll**
 
 Этот универсальный ассистент умеет многое в группах:
 • 🖼️ Генерация изображений с DALL‑E 3
@@ -301,7 +300,6 @@ group_support_text = """
 • 📝 Распознавание текста на картинках
 • 💬 Продвинутые групповые диалоги
 • 🌐 Поддержка разных языков
-**Разработка:** [Chandan Singh](https://techycsr.me)
 **Технологии:** GPT-4o и GPT-4o-mini
 **Версия:** 2.0
 """
@@ -310,7 +308,7 @@ async def handle_group_command_inline(client, callback):
     user_id = callback.from_user.id
     
     # Translate the command text and buttons
-    texts_to_translate = [group_command_text, "🧠 AI in Groups", "🖼️ Image Commands", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [group_command_text, "🧠 AI в группах", "🖼️ Генерации", "📋 Основное", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     
     # Extract translated results
@@ -329,7 +327,7 @@ async def handle_group_command_inline(client, callback):
     
     # Add admin button if user is an admin
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="group_cmd_admin")])
     
     # Add back button
@@ -355,7 +353,7 @@ async def handle_group_callbacks(client, callback):
     user_lang = user_db.get_user_language(user_id)
     
     # Prepare back button for all menus
-    back_btn_text = "↩️ Back to Main Menu"
+    back_btn_text = "↩️ Назад в меню"
     translated_back = await async_translate_to_lang(back_btn_text, user_lang)
     back_keyboard = InlineKeyboardMarkup([[
         InlineKeyboardButton(translated_back, callback_data="back_to_group_start")
@@ -369,7 +367,7 @@ async def handle_group_callbacks(client, callback):
     elif callback_data == "group_cmd_ai":
         # Show AI commands for groups
         translated_text = await async_translate_to_lang(group_ai_commands_text, user_lang)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_lang)
+        back_btn = await translate_ui_element("🔙 Назад", user_lang)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="group_commands")]
@@ -385,7 +383,7 @@ async def handle_group_callbacks(client, callback):
     elif callback_data == "group_cmd_img":
         # Show Image commands for groups
         translated_text = await async_translate_to_lang(group_image_commands_text, user_lang)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_lang)
+        back_btn = await translate_ui_element("🔙 Назад", user_lang)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="group_commands")]
@@ -401,7 +399,7 @@ async def handle_group_callbacks(client, callback):
     elif callback_data == "group_cmd_main":
         # Show main commands for groups
         translated_text = await async_translate_to_lang(group_main_commands_text, user_lang)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_lang)
+        back_btn = await translate_ui_element("🔙 Назад", user_lang)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="group_commands")]
@@ -417,7 +415,7 @@ async def handle_group_callbacks(client, callback):
     elif callback_data == "group_cmd_admin":
         # Show admin commands (only for admins)
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_lang)
+            back_btn = await translate_ui_element("🔙 Назад", user_lang)
             
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="group_commands")]
@@ -451,19 +449,13 @@ async def handle_group_callbacks(client, callback):
         translated_support = await async_translate_to_lang(group_support_text, user_lang)
         
         # Translate button labels
-        contact_btn = await async_translate_to_lang("👥 Contact Developer", user_lang)
-        community_btn = await async_translate_to_lang("🌐 Community", user_lang)
-        source_code_btn = await async_translate_to_lang("⌨️ Source Code", user_lang)
-        back_btn = await async_translate_to_lang("🔙 Back", user_lang)
+        contact_btn = await async_translate_to_lang("👥 Связь с разработчиком", user_lang)
+        back_btn = await async_translate_to_lang("🔙 Назад", user_lang)
         
         # Create keyboard with support options
         keyboard = InlineKeyboardMarkup([
             [
-                InlineKeyboardButton(contact_btn, url="https://t.me/techycsr"),
-                InlineKeyboardButton(community_btn, url="https://t.me/AdvChatGpt")
-            ],
-            [
-                InlineKeyboardButton(source_code_btn, url="https://github.com/TechyCSR/AdvAITelegramBot")
+                InlineKeyboardButton(contact_btn, url="https://t.me/artemevkhv"),
             ],
             [
                 InlineKeyboardButton(back_btn, callback_data="back_to_group_start")

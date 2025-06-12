@@ -9,12 +9,9 @@ from modules.chatlogs import channel_log
 
 
 help_text = """
-✨ **ЦЕНТР ПОМОЩИ ADVANCED ChatGPT BOT** ✨
+✨ **ЦЕНТР ПОМОЩИ ChatAll** ✨
 
 ━━━━━━━━━━━━━━━━━━━
-
-Этот умный бот создан **Chandan Singh** (@techycsr)
-чтобы принести возможности ChatGPT прямо в ваши чаты Telegram.
 
 **ВЫБЕРИТЕ КАТЕГОРИЮ НИЖЕ:**
 """
@@ -158,12 +155,12 @@ async def help(client, message):
     # Translate help text and button labels
     texts_to_translate = [
         help_text, 
-        "🧠 AI Chat", 
-        "🖼️ Image Generation", 
-        "🎙️ Voice Features",
-        "🔍 Image Analysis",
-        "🚀 Quick Start",
-        "📋 Commands"
+        "🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт",
+        "📋 Команды"
     ]
     
     translated_texts = await batch_translate(texts_to_translate, user_id)
@@ -197,8 +194,11 @@ async def help(client, message):
 async def help_inline_start(bot, callback):
     user_id = callback.from_user.id
     texts_to_translate = [
-        help_text, "🧠 AI Chat", "🖼️ Image Generation", "🎙️ Voice Features",
-        "🔍 Image Analysis", "🚀 Quick Start", "📋 Commands", "🔙 Back"
+        help_text,"🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт","🔙 Назад"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
@@ -231,8 +231,11 @@ async def help_inline_start(bot, callback):
 async def help_inline_help(bot, callback):
     user_id = callback.from_user.id
     texts_to_translate = [
-        help_text, "🧠 AI Chat", "🖼️ Image Generation", "🎙️ Voice Features",
-        "🔍 Image Analysis", "🚀 Quick Start", "📋 Commands"
+        help_text,"🧠 ИИ Чат", 
+        "🖼️ Генерации", 
+        "🎙️ Голосовые функции",
+        "🔍 Анализ изображений",
+        "🚀 Быстрый старт","🔙 Назад"
     ]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_help = translated_texts[0]
@@ -277,7 +280,7 @@ async def handle_help_category(client, callback):
     elif 'quickstart' in callback_data:
         help_content = quick_start_help
     translated_text = await async_translate_to_lang(help_content, user_id)
-    back_btn = await translate_ui_element("🔙 Back to Help Menu", user_id)
+    back_btn = await translate_ui_element("🔙 Назад в меню помощи", user_id)
     # Use correct callback_data for back button
     back_callback = "help_start" if is_start else "help_help"
     keyboard = InlineKeyboardMarkup([

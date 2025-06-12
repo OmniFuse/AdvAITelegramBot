@@ -38,7 +38,7 @@ _hot_cache_size = 1000  # Number of most frequent translations to keep per langu
 def _load_cache_file(lang: str) -> Dict[str, str]:
     """Load the cache file for the specified language"""
     with _cache_lock:
-        if lang == 'en':
+        if  lang == 'en':
             return {}  # No translation needed for English
         
         # Create empty file if it doesn't exist

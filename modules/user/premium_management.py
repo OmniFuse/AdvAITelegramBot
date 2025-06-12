@@ -175,7 +175,7 @@ async def get_premium_benefits_message(user_id: int) -> str:
     )
     # --- Call to Action ---
     upgrade_cta = (
-        "\n\n<a href='https://t.me/techycsr'><b>🚀 Upgrade to Premium Now</b></a>"
+        "\n\n<a href='https://t.me/artemevkhv'><b>🚀 Upgrade to Premium Now</b></a>"
     )
 
     # --- Compose Message ---

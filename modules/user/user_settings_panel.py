@@ -24,7 +24,7 @@ settings_text = """
 
 Управляйте настройками через стартовую панель ниже.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 async def user_settings_panel_command(client, message, edit=False, callback_query=None):
@@ -49,10 +49,10 @@ async def user_settings_panel_command(client, message, edit=False, callback_quer
 
     is_premium, remaining_days, _ = await is_user_premium(user_id)
     if is_premium:
-        premium_status_text_key = "✨ Premium User ({days} days left)"
+        premium_status_text_key = "✨ Премиум ({days} дней осталось)"
         premium_status_val = await async_translate_to_lang(premium_status_text_key.format(days=remaining_days), current_language)
     else:
-        premium_status_text_key = "👤 Standard User"
+        premium_status_text_key = "👤 Стандартный"
         premium_status_val = await async_translate_to_lang(premium_status_text_key, current_language)
 
     current_mode_label = await async_translate_to_lang(modes.get(current_mode, current_mode), current_language)
@@ -116,17 +116,17 @@ async def handle_user_settings_callback(client, callback_query):
         return
     elif data == "user_settings_status":
         stats = await get_bot_statistics()
-        sysinfo_title = await async_translate_to_lang("⚙️ System Information", current_language)
-        uptime_text = await async_translate_to_lang("Uptime", current_language)
+        sysinfo_title = await async_translate_to_lang("⚙️ Система", current_language)
+        uptime_text = await async_translate_to_lang("Аптайм", current_language)
         cpu_text = await async_translate_to_lang("CPU", current_language)
-        mem_text = await async_translate_to_lang("Memory", current_language)
-        feature_status_text = await async_translate_to_lang("Current Feature Status", current_language)
-        enabled_text = await async_translate_to_lang("✅ Enabled", current_language)
-        disabled_text = await async_translate_to_lang("❌ Disabled", current_language)
-        back_text = await async_translate_to_lang("🔙 Back", current_language)
-        ai_text = await async_translate_to_lang("AI Response", current_language)
-        img_text = await async_translate_to_lang("Image Generation", current_language)
-        voice_text = await async_translate_to_lang("Voice Features", current_language)
+        mem_text = await async_translate_to_lang("ОЗУ", current_language)
+        feature_status_text = await async_translate_to_lang("Статус функций", current_language)
+        enabled_text = await async_translate_to_lang("✅ Включено", current_language)
+        disabled_text = await async_translate_to_lang("❌ Выключено", current_language)
+        back_text = await async_translate_to_lang("🔙 Назад", current_language)
+        ai_text = await async_translate_to_lang("Ответ AI", current_language)
+        img_text = await async_translate_to_lang("Генерации фото", current_language)
+        voice_text = await async_translate_to_lang("Голосовые функции", current_language)
         status_message = f"<b>{sysinfo_title}</b>\n\n"
         status_message += f"• {uptime_text}: <b>{stats.get('uptime','-')}</b>\n"
         status_message += f"• {cpu_text}: <b>{stats.get('cpu_usage','-')}%</b>\n"
@@ -137,7 +137,7 @@ async def handle_user_settings_callback(client, callback_query):
         status_message += f"• {voice_text}: {enabled_text if stats.get('voice_features_enabled', True) else disabled_text}\n"
         if stats.get('maintenance_mode', False):
             maintenance_info = await async_translate_to_lang(
-                "\n⚠️ <b>The bot is currently in maintenance mode.</b>\nSome features may be unavailable.",
+                "\n⚠️ <b>Бот в режиме обслуживания.</b>\Часть функционала может быть недоступна.",
                 current_language
             )
             status_message += maintenance_info
@@ -156,5 +156,5 @@ async def handle_user_settings_callback(client, callback_query):
         await callback_query.answer()
         return
     
-    default_answer = await async_translate_to_lang("Feature coming soon!", current_language)
+    default_answer = await async_translate_to_lang("Функция в разработке", current_language)
     await callback_query.answer(default_answer, show_alert=True) 

@@ -14,7 +14,7 @@ command__text = """
 
 Выберите функцию ниже, чтобы увидеть подробные команды и примеры.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 ai_commands_text = """
@@ -36,7 +36,7 @@ ai_commands_text = """
 - Для вопросов по программированию указывайте язык для лучшего форматирования
 - Используйте `/new` для очистки истории беседы
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 image_commands_text = """
@@ -62,7 +62,7 @@ image_commands_text = """
 - Пробуйте разные стили для разнообразных результатов
 - Указывайте художественные референсы для нужной стилистики
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 main_commands_text = """
@@ -73,7 +73,7 @@ main_commands_text = """
 **/settings** - настроить бота
 **/rate** - оценить бота
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 admin_commands_text = """
@@ -97,7 +97,7 @@ admin_commands_text = """
 
 **Примечание:** эти команды доступны только администраторам, указанным в конфигурации.
 
-**@AdvChatGptBot**
+**@ChatAllTelegramBot**
 """
 
 
@@ -105,7 +105,7 @@ async def command_inline(client, callback):
     user_id = callback.from_user.id
     
     # Translate the command text and buttons
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     
     # Extract translated results
@@ -124,7 +124,7 @@ async def command_inline(client, callback):
     
     # Add admin button if user is an admin
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin")])
     
     # Add back button
@@ -150,7 +150,7 @@ async def handle_command_callbacks(client, callback):
     if callback_data == "cmd_ai":
         # Show AI commands
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -167,7 +167,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_img":
         # Show Image commands
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -184,7 +184,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_main":
         # Show main commands
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -201,7 +201,7 @@ async def handle_command_callbacks(client, callback):
     elif callback_data == "cmd_admin":
         # Show admin commands (only for admins)
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands")]
@@ -223,7 +223,7 @@ async def handle_command_callbacks(client, callback):
 
 async def command_inline_start(client, callback):
     user_id = callback.from_user.id
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_command = translated_texts[0]
     ai_btn = translated_texts[1]
@@ -236,7 +236,7 @@ async def command_inline_start(client, callback):
         [InlineKeyboardButton(main_btn, callback_data="cmd_main_start")],
     ]
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin_start")])
     keyboard_buttons.append([InlineKeyboardButton(back_btn, callback_data="back")])
     keyboard = InlineKeyboardMarkup(keyboard_buttons)
@@ -252,7 +252,7 @@ async def command_inline_start(client, callback):
 
 async def command_inline_help(client, callback):
     user_id = callback.from_user.id
-    texts_to_translate = [command__text, "🧠 AI Response", "🖼️ Image Generation", "📋 Main Commands", "🔙 Back"]
+    texts_to_translate = [command__text, "🧠 AI ответ", "🖼️ Генерация", "📋 Основные", "🔙 Назад"]
     translated_texts = await batch_translate(texts_to_translate, user_id)
     translated_command = translated_texts[0]
     ai_btn = translated_texts[1]
@@ -265,7 +265,7 @@ async def command_inline_help(client, callback):
         [InlineKeyboardButton(main_btn, callback_data="cmd_main_help")],
     ]
     if user_id in ADMINS:
-        admin_btn = "⚙️ Admin Commands"
+        admin_btn = "⚙️ Администратор"
         keyboard_buttons.append([InlineKeyboardButton(admin_btn, callback_data="cmd_admin_help")])
     keyboard_buttons.append([InlineKeyboardButton(back_btn, callback_data="help_help")])
     keyboard = InlineKeyboardMarkup(keyboard_buttons)
@@ -284,7 +284,7 @@ async def handle_command_callbacks_start(client, callback):
     callback_data = callback.data
     if callback_data == "cmd_ai_start":
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -297,7 +297,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_img_start":
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -310,7 +310,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_main_start":
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_start")]
         ])
@@ -323,7 +323,7 @@ async def handle_command_callbacks_start(client, callback):
         )
     elif callback_data == "cmd_admin_start":
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands_start")]
             ])
@@ -344,7 +344,7 @@ async def handle_command_callbacks_help(client, callback):
     callback_data = callback.data
     if callback_data == "cmd_ai_help":
         translated_text = await async_translate_to_lang(ai_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -357,7 +357,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_img_help":
         translated_text = await async_translate_to_lang(image_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -370,7 +370,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_main_help":
         translated_text = await async_translate_to_lang(main_commands_text, user_id)
-        back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+        back_btn = await translate_ui_element("🔙 Назад", user_id)
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(back_btn, callback_data="commands_help")]
         ])
@@ -383,7 +383,7 @@ async def handle_command_callbacks_help(client, callback):
         )
     elif callback_data == "cmd_admin_help":
         if user_id in ADMINS:
-            back_btn = await translate_ui_element("🔙 Back to Commands", user_id)
+            back_btn = await translate_ui_element("🔙 Назад", user_id)
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton(back_btn, callback_data="commands_help")]
             ])

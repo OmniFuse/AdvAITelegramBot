@@ -245,7 +245,7 @@ def format_ai_response(response: str, prompt: str, username: str = None) -> str:
     # if username:
     #     formatted_response += f"👤 Request by {username}\n"
         
-    formatted_response += f"**@AdvChatGptBot**"
+    formatted_response += f"**@ChatAllTelegramBot**"
     
     return formatted_response
 
