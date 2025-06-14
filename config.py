@@ -77,3 +77,8 @@ TRANSLATION_ENABLED = (
     os.environ.get('TRANSLATION_ENABLED', 'true').lower() in ['true', '1', 'yes', 'y']
 )
 
+# API settings for linking site accounts
+BOT_API_TOKEN = os.environ.get('BOT_API_TOKEN') or os.getenv('BOT_API_TOKEN') or ''
+SITE_API_URL = os.environ.get('SITE_API_URL') or os.getenv('SITE_API_URL') or ''
+WEBAPP_LINK = os.environ.get('WEBAPP_LINK') or os.getenv('WEBAPP_LINK') or 'https://t.me/ChatAllTelegramBot/linktg'
+
