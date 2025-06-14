@@ -47,6 +47,7 @@ import time
 from modules.models.image_service import ImageService
 from modules.user.user_bans_management import ban_user, unban_user, is_user_banned, get_banned_message, get_user_by_id_or_username
 from modules.user.premium_management import add_premium_status, remove_premium_status, is_user_premium, get_premium_status_message, daily_premium_check, get_premium_benefits_message, get_all_premium_users, format_premium_users_list
+from modules.user.balance import balance_command
 import multiprocessing
 import traceback
 
@@ -755,6 +756,12 @@ def create_bot_instance(bot_token, bot_index=1):
             logger.warning(f"Unauthorized user {update.from_user.id} attempted to use invite command")
             await update.reply_text("⛔ У вас нет прав использовать эту команду.")
             await channel_log(bot, update, "/invite", f"Unauthorized access attempt", level="WARNING")
+
+    @advAiBot.on_message(filters.command("balance"))
+    async def balance_cmd(bot, update):
+        if await check_if_banned_and_reply(bot, update):
+            return
+        await balance_command(bot, update)
 
     @advAiBot.on_message(filters.command("uinfo"))
     async def info_commands(bot, update):
