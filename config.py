@@ -27,7 +27,7 @@ OCR_KEY = os.environ.get('OCR_KEY') or os.getenv("OCR_KEY") or "OCR_KEY"
 
 MULTIPLE_BOTS = os.environ.get('MULTIPLE_BOTS') or os.getenv("MULTIPLE_BOTS") or "false"
 MULTIPLE_BOTS = MULTIPLE_BOTS.lower() in ["true", "1", "yes", "y"]
-NUM_OF_BOTS = int(os.environ.get('NUM_OF_BOTS')) or int(os.getenv("NUM_OF_BOTS")) or 1
+NUM_OF_BOTS = int(os.environ.get('NUM_OF_BOTS') or os.getenv('NUM_OF_BOTS') or '1')
 
 
 # Function to get all bot tokens

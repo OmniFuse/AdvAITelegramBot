@@ -21,7 +21,7 @@ async def balance_command(client: pyrogram.Client, message: Message):
         ).format(**user_data)
         text = await async_translate_to_lang(text, user_lang)
         btn_text = await async_translate_to_lang("Open WebApp", user_lang)
-        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(btn_text, url=WEBAPP_LINK)]])
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(btn_text, web_app=WebAppInfo(url=WEBAPP_LINK))]])
         await message.reply_text(text, reply_markup=keyboard)
     else:
         text = await async_translate_to_lang(
